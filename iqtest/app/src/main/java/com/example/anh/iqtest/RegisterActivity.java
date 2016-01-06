@@ -13,9 +13,9 @@ import com.example.anh.utils.KeyValueDb;
 /**
  * Created by anh on 12/23/15.
  */
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends CommonActivity {
     Button btnRegister;
-    private Activity mActivity;
+
 
     private View.OnClickListener registerClickListener = new View.OnClickListener() {
         @Override
@@ -73,5 +73,7 @@ public class RegisterActivity extends Activity {
 
        btnRegister = (Button)findViewById(R.id.btn_register);
         btnRegister.setOnClickListener(registerClickListener);
+
+        setupUI(findViewById(R.id.register_screen));
     }
 }

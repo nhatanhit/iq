@@ -55,6 +55,7 @@
                 android:layout_height="wrap_content" />
 
             <EditText
+                android:singleLine="true"
                 android:id="@+id/login_username_text"
                 android:hint="@string/username"
                 android:layout_marginTop="@dimen/space_10"
@@ -64,6 +65,8 @@
                 android:layout_height="wrap_content" />
 
             <EditText
+                android:singleLine="true"
+                android:inputType="textPassword"
                 android:id="@+id/login_password_text"
                 android:hint="@string/password"
                 android:layout_marginTop="@dimen/space_10"

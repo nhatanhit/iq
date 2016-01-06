@@ -31,5 +31,8 @@ public class ViewUserActivity extends CustomBarWithSearchActivity  {
         };
         bindEvents();
 
+        //use on touch keyboard
+        setupUI(findViewById(R.id.view_user_screen));
+
     }
 }

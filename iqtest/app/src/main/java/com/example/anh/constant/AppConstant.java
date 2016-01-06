@@ -41,9 +41,9 @@ public class AppConstant {
         put(AppConstant.USER_NAME_IS_REQUIRED, "Username Is Required");
         put(AppConstant.PASSWORD_IS_REQUIRED, "Password Is Required");
         put(AppConstant.PASSWORD_IS_INCORRECT,"Password Is Incorrect");
-        put(AppConstant.DATA_NOT_IMPORT,"You need to inport data");
+        put(AppConstant.DATA_NOT_IMPORT,"You need to import data");
         put(AppConstant.APPLICANT_INFO_NOT_FILL,"Please insert full name, phone");
-        put(AppConstant.APPLICANT_CREATE_SUCCESS,"Create Applicant Success");
+        put(AppConstant.APPLICANT_CREATE_SUCCESS,"Add User Success");
     }};
 
 
