@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg_wood_2line"
+    tools:context="com.example.anh.iqtest.ImportDataActivity">
+
+    <include layout="@layout/custom_bar_with_header"/>
+    
+    <LinearLayout
+        android:padding="@dimen/space_25"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:textSize="18sp"
+            android:text="@string/url_import_data"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/download_link"
+            android:paddingTop="@dimen/space_8"
+            android:paddingBottom="@dimen/space_8"
+            android:layout_marginTop="@dimen/space_10"
+            android:background="@drawable/round_corner_text_box"
+            android:textAlignment="center"
+            android:hint="@string/example_hint_path_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:layout_marginTop="@dimen/space_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btn_import_data"
+                android:text="@string/download" android:layout_centerInParent="true"
+                android:textColor="@color/color_white"
+                android:background="@drawable/round_corner_button_red"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_marginTop="@dimen/space_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:text="@string/user_guide" android:layout_centerInParent="true"
+                android:textColor="@color/color_white"
+                android:background="@drawable/round_corner_button_blue"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

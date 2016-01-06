@@ -1,0 +1,55 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+
+    <dimen name="actionbar_height">50dp</dimen>
+    <dimen name="actionbar_padding_title">10dp</dimen>
+
+    <dimen name="width_img_actionbar">72dp</dimen>
+    <dimen name="width_img_next">40dp</dimen>
+    <!-- activity_main-->
+    <dimen name="activity_vertical_margin_home">25dp</dimen>
+    <dimen name="font_screen_home">18sp</dimen>
+
+    <dimen name="text_height">60dp</dimen>
+    <dimen name="padding_top_text">15dp</dimen>
+    <dimen name="margin_bottom_text">10dp</dimen>
+    <!-- Edit text form_create_group-->
+    <dimen name="edittext_height">50dp</dimen>
+    <dimen name="edittext_pading">10dp</dimen>
+    <dimen name="edittext_margin_bottom">10dp</dimen>
+    <!-- list_group-->
+    <dimen name="font_screen_list_group">20sp</dimen>
+    <dimen name="magrin_right_img">20dp</dimen>
+    <dimen name="padding_right_dot">5dp</dimen>
+    <dimen name="_dp">-3dp</dimen>
+    <!--group_search-->
+    <dimen name="edittext_search_padding">10dp</dimen>
+    <dimen name="edittext_search_height">40dp</dimen>
+    <dimen name="font_text_group_search">17sp</dimen>
+    <!--activity_play-->
+    <dimen name="padding_right_header">18dp</dimen>
+    <dimen name="padding_left_header">10dp</dimen>
+    <dimen name="magrin_left_header">8dp</dimen>
+    <dimen name="magrin_hole">5dp</dimen>
+    <dimen name="magrin_hole_left">20dp</dimen>
+    <dimen name="magrin_top_decor_bottom">5dp</dimen>
+    <dimen name="padding_left_hold_small">3dp</dimen>
+
+
+    <dimen name="space_25">25dp</dimen>
+    <dimen name="space_15">15dp</dimen>
+    <dimen name="space_20">20dp</dimen>
+    <dimen name="space_30">30dp</dimen>
+    <dimen name="space_5">5dp</dimen>
+    <dimen name="space_10">10dp</dimen>
+    <dimen name="space_8">8dp</dimen>
+    <dimen name="space_16">16dp</dimen>
+    <dimen name="header_text_size">25sp</dimen>
+    <dimen name="border_width">2dp</dimen>
+    <dimen name="space_300">300dp</dimen>
+
+</resources>

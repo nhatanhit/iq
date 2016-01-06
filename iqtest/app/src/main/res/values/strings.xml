@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">iqtest</string>
+    <string name="action_settings">Settings</string>
+    <string name="single_player">SINGLE PLAYER</string>
+    <string name="multi_player">MULTI PLAYER CONTEST</string>
+    <string name="quit">QUIT</string>
+    <!-- Edit text form_create_group-->
+    <string name="create_group">Create Group Players</string>
+    <string name="add_more">ADD MORE</string>
+    <string name="save">SAVE</string>
+    <string name="group_name">Group name</string>
+
+    <string name="fullname">Full name</string>
+    <!-- group_search-->
+    <string name="search">Search</string>
+    <!-- activity_play-->
+    <string name="exit">EXIT</string>
+    <string name="finish">FINISH</string>
+    <string name="download">DOWNLOAD</string>
+    <string name="user_guide">User Guide</string>
+    <string name="company_name">Company name</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+
+    <string name="full_name">Full Name</string>
+    <string name="phone">Phone</string>
+    <string name="add_user_menu_item">Add User</string>
+    <string name="view_result_menu_item">View Result</string>
+    <string name="view_question_menu_item">View question/answer</string>
+    <string name="import_data_menu_item">Import Data</string>
+    <string name="url_import_data">URL Import Data (File.zip)</string>
+    <string name="choose_answer">Choose Answer</string>
+
+    <string name="example_company_name">BSP SOFTWARE SERVICES CORP</string>
+    <string name="example_user_name">My Linh</string>
+    <string name="example_phone_number">0168216</string>
+    <string name="example_number_of_sentence">20/30</string>
+    <string name="example_number_of_correct">17</string>
+    <string name="title_activity_import_data">ImportDataActivity</string>
+    <string name="example_hint_path_text">http://bsp.vn/image.zip</string>
+    <string name="title_activity_user_guide">UserGuideActivity</string>
+    <string name="test_text">
+        "Hôm qua 23/12, Công Phượng đã ký hợp đồng thi đấu một năm cho CLB Mito Hollyhock. Đây cầu thủ thứ hai của Học viện HAGL Arsenal JMG được đưa ra nước ngoài thi đấu. Trước đó ít ngày, tiền vệ Nguyễn Tuấn Anh đã đạt được thỏa thuận thi đấu với CLB Yokohama, cũng thuộc J-League 2. Ngày 28/12 sắp tới, đến lượt tiền vệ Lương Xuân Trường ký hợp đồng với CLB Incehon United của Hàn Quốc
+        Tôi vui, cảm giác giống như một người cha cho ba đứa con gái đi lấy chồng chỉ trong một tháng. Mà đặc biệt là toàn lấy chồng ngoại quốc mới độc đáo chứ.
+        Đây thực chất chỉ là những cầu thủ nổi bật trong khoá I của Học viện. Khoá II đã có nhiều tài năng nổi lên, trong đó tôi đánh giá cao Thanh Hậu. Theo báo cáo đánh giá của Học viện JMG toàn cầu, khoá III và khóa IV có nhiều cầu thủ còn hay hơn cả Công Phượng, Tuấn Anh hay Xuân Trường. Chắc chắn ba-bốn năm tới, HAGL sẽ có nhiều ngôi sao sáng nữa."
+    </string>
+    <string name="title_activity_question">QuestionActivity</string>
+
+</resources>

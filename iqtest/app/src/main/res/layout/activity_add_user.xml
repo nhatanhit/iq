@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.anh.iqtest.AddUserActivity"
+    android:orientation="vertical"
+    android:background="@drawable/bg_wood_2line" >
+
+    <include layout="@layout/custom_bar_with_header"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical"
+        android:padding="@dimen/space_25">
+
+
+
+        <EditText
+            android:id="@+id/add_user_full_name"
+            android:hint="@string/full_name"
+            android:layout_marginTop="@dimen/space_10"
+            android:background="@drawable/round_corner_text_box"
+            android:padding="@dimen/space_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:hint="@string/phone"
+            android:id="@+id/add_user_phone"
+            android:layout_marginTop="@dimen/space_10"
+            android:background="@drawable/round_corner_text_box"
+            android:padding="@dimen/space_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:layout_marginTop="@dimen/space_25"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btn_save_user"
+                android:text="@string/save" android:layout_centerInParent="true"
+                android:textColor="@color/color_white"
+                android:background="@drawable/round_corner_button_red"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

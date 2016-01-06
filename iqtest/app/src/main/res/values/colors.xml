@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_button_login_stroke">#816e57</color>
+    <color name="color_button_login_background">#ed8981</color>
+    <color name="color_button_user_guide_background">#1ea2b2</color>
+    <color name="color_black">#000000</color>
+    <color name="color_name_user">#01697d</color>
+    <color name="color_phone_number">#cd9d40</color>
+    <color name="color_number_of_correct">#bd1817</color>
+    <color name="color_number_of_sentence">#ad7c2c</color>
+    <color name="color_white_transparent_40">#66FFFFFF</color>
+    <color name="color_white_transparent_70">#B3FFFFFF</color>
+    <color name="color_white_transparent_30">#4DFFFFFF</color>
+    <color name="color_table_row_border">#b68c4f</color>
+</resources>
