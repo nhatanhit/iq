@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 
 import com.example.anh.constant.AppConstant;
 import com.example.anh.database.DBAdapter;
-import com.example.anh.database.UserModel;
+import com.example.anh.model.UserModel;
 import com.example.anh.listener.CustomListener;
 
 /**
@@ -31,8 +31,8 @@ public class CreateDataTask extends AsyncTask<UserModel, Void, Integer> {
 
     @Override
     protected void onPostExecute(Integer integer) {
-        listener.onNotifyStatusCreate(integer);
         super.onPostExecute(integer);
+        listener.onNotifyStatusCreate(integer);
 
     }
 }

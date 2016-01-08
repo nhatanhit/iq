@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import com.example.anh.constant.AppConstant;
 import com.example.anh.listener.CustomListener;
 import com.example.anh.utils.Json;
+import com.example.anh.utils.KeyValueDb;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,12 +18,12 @@ import java.util.ArrayList;
 /**
  * Created by anh on 12/29/15.
  */
-public class CheckDataTask extends AsyncTask<String,Void,Integer> {
+public class CheckDataTask extends AsyncTask<String,Integer,Integer> {
 
     private Context mContext;
     private CustomListener.onAsynTaskExtractZipProgress progressListener;
     private Integer numberOfQuestions;
-
+    private Integer per = 0;
     public CheckDataTask(Context context,CustomListener.onAsynTaskExtractZipProgress p) {
         this.mContext = context;
         this.progressListener = p;
@@ -30,6 +31,12 @@ public class CheckDataTask extends AsyncTask<String,Void,Integer> {
 
     //Return number of questions
 
+
+    @Override
+    protected void onProgressUpdate(Integer... values) {
+        super.onProgressUpdate(values);
+
+    }
 
     @Override
     protected void onPreExecute() {
@@ -122,7 +129,8 @@ public class CheckDataTask extends AsyncTask<String,Void,Integer> {
             return AppConstant.JSON_PARSE_DATA_ERROR;
         }
 
-
+        //save to shared preferences , content of json file
+        KeyValueDb.setValue(mContext.getApplicationContext(),"question_data",jObj.toString());
         return AppConstant.CHECK_DOWNLOAD_DATA_SUCCES;
     }
 }

@@ -7,12 +7,14 @@ import android.os.PowerManager;
 import android.widget.Toast;
 
 
+import com.example.anh.constant.AppConstant;
 import com.example.anh.listener.CustomListener;
 import com.example.anh.utils.KeyValueDb;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.io.IOException;
 
@@ -55,12 +57,15 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String s) {
         mWakeLock.release();
-
-        if (s != null)
+        if(s != null) {
             Toast.makeText(context, "Download error: " + s, Toast.LENGTH_LONG).show();
-        else
+            this.listener.onProgressFinish(AppConstant.DOWNLOAD_ERROR);
+        }
+        else {
             Toast.makeText(context,"File downloaded", Toast.LENGTH_SHORT).show();
-        this.listener.onProgressFinish();
+            this.listener.onProgressFinish(AppConstant.DOWNLOAD_FROM_URL_SUCCESS);
+        }
+
     }
 
     @Override
@@ -107,8 +112,13 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
                     publishProgress((int) (total * 100 / fileLength));
                 output.write(data, 0, count);
             }
-        } catch (Exception e) {
-            return e.toString();
+        }
+        catch (MalformedURLException exc) {
+            return AppConstant.messages.get(AppConstant.MALFORMED_URL);
+        }
+
+        catch (Exception e) {
+            return AppConstant.messages.get(AppConstant.DOWNLOAD_ERROR);
         } finally {
             try {
                 if (output != null)

@@ -9,29 +9,39 @@ import java.util.Objects;
  * Created by anh on 12/25/15.
  */
 public  class CustomListener {
-    public static interface TimePicker {
+    public interface TimePicker {
         void onTimeSet(android.widget.TimePicker view, Integer hourOfDay, Integer minute);
     };
 
-    public static interface onAsyntaskDownloadProgress {
+    public interface TimeChange {
+        void onNotifyDurationChange(Integer hour,Integer minute);
+        void onNotifyDurationEnd();
+    }
+
+    public interface onAsyntaskDownloadProgress {
         void onProgressUpdate(Integer... progress);
-        void onProgressFinish();
+        void onProgressFinish(Integer status);
         void onProgressStart();
     };
 
-    public static interface onAsynTaskExtractZipProgress {
+    public interface onAsynTaskExtractZipProgress {
+        void onProgressExtract(int percentageCompleted);
         void onFinish(int status);
+//        void onProgressCheckData(int percentageCompleted);
         void onFinishCheckDataZip(int status,String extra);
         void onAfterDeleteFailedDirectory(int status);
-
     };
 
-    public static interface onAsynTaskSQLiteDatabase {
+    public interface onAsynTaskSQLiteDatabase {
         void onNotifyStatusCreate(int status);
         void onNotifyStatusSelect(int status, Object[] o);
     }
-    public static interface onCustomBarBehaviors {
-        void onSearch();
+    //this interface for use in abstract class, parent class, use one layout as one part of children class layout
+    //So it will implement a common task(algorithm)
+    //For example a search util in search layout, find icon click to search and inject onBehaviors listener of client to common task
+    //of abstract class
+    public  interface onBehaviors {
+        void onSearchWithObjectFilter(Object filter);
     }
 
 

@@ -31,7 +31,7 @@
     <string name="import_data_menu_item">Import Data</string>
     <string name="url_import_data">URL Import Data (File.zip)</string>
     <string name="choose_answer">Choose Answer</string>
-
+    <string name="view_answer">View Answer</string>
     <string name="example_company_name">BSP SOFTWARE SERVICES CORP</string>
     <string name="example_user_name">My Linh</string>
     <string name="example_phone_number">0168216</string>

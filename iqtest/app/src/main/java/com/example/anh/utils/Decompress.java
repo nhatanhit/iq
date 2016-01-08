@@ -7,6 +7,7 @@ package com.example.anh.utils;
 import android.util.Log;
 
 import com.example.anh.constant.AppConstant;
+import com.example.anh.listener.CustomListener;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,11 +18,11 @@ import java.util.zip.ZipInputStream;
 public class Decompress {
     private String _zipFile;
     private String _location;
-
-    public Decompress(String zipFile, String location) {
+    private CustomListener.onAsynTaskExtractZipProgress listener;
+    public Decompress(String zipFile, String location,CustomListener.onAsynTaskExtractZipProgress l) {
         _zipFile = zipFile;
         _location = location;
-
+        this.listener = l;
         _dirChecker("");
     }
 

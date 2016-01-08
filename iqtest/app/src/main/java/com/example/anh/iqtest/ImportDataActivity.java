@@ -39,10 +39,17 @@ public class ImportDataActivity extends CustomBarWithHeaderActivity {
     private String unzipDirLocation;
     private Activity mActivity;
     private CustomListener.onAsynTaskExtractZipProgress unzipCallback = new CustomListener.onAsynTaskExtractZipProgress() {
+
+        @Override
+        public void onProgressExtract(int percentageCompleted) {
+            mProgressDialog.setProgress(percentageCompleted);
+        }
+
         @Override
         public void onFinish(int status) {
             if(status == AppConstant.UNZIPPING_SUCCESS_STATUS) {
                 mProgressDialog.setMessage("Check Data Progress");
+                mProgressDialog.setProgress(100);
                 String zipFile = Environment.getExternalStorageDirectory() + "/data.zip";
                 String unzipLocation = Environment.getExternalStorageDirectory() + "/unzipped/";
                 CheckDataTask checkDataTask = new CheckDataTask(getApplicationContext(),this);
@@ -115,20 +122,26 @@ public class ImportDataActivity extends CustomBarWithHeaderActivity {
         }
 
         @Override
-        public void onProgressFinish() {
+        public void onProgressFinish(Integer status) {
+            if(status == AppConstant.DOWNLOAD_FROM_URL_SUCCESS) {
+                mProgressDialog.setMessage("Unzipping Progress");
+                //open file, check extension, and then extract
+                mProgressDialog.setProgress(0);
 
-            mProgressDialog.setMessage("Unzipping Progress");
-            //open file, check extension, and then extract
-            String zipFile = Environment.getExternalStorageDirectory() + "/data.zip";
-            String unzipLocation = Environment.getExternalStorageDirectory() + "/unzipped/";
-            UnzippingTask unzipTask = new UnzippingTask(getApplicationContext(),unzipCallback);
+                String zipFile = Environment.getExternalStorageDirectory() + "/data.zip";
+                String unzipLocation = Environment.getExternalStorageDirectory() + "/unzipped/";
+                UnzippingTask unzipTask = new UnzippingTask(getApplicationContext(),unzipCallback,zipFile,unzipLocation);
 
-            zipFileLocation = zipFile;
-            unzipDirLocation = unzipLocation;
+                zipFileLocation = zipFile;
+                unzipDirLocation = unzipLocation;
 
-            String[] paths = new String[]{zipFile,unzipLocation};
-            unzipTask.execute(paths);
-
+//                String[] paths = new String[]{zipFile,unzipLocation};
+                unzipTask.execute();
+            }
+            else {
+                mProgressDialog.dismiss();
+                KeyValueDb.setValue(getApplicationContext(),"question_data_url","");
+            }
         }
 
         @Override
@@ -177,10 +190,11 @@ public class ImportDataActivity extends CustomBarWithHeaderActivity {
 
 
         mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setIndeterminate(false);
         mProgressDialog.setMessage("Download Progress");
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         mProgressDialog.setCancelable(true);
+        mProgressDialog.setCanceledOnTouchOutside(false);
 
         KeyValueDb.getPrefs(getApplicationContext());
         String questionDataUrl =  KeyValueDb.getValue(getApplicationContext(),"question_data_url");

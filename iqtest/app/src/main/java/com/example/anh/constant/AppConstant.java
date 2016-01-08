@@ -28,6 +28,11 @@ public class AppConstant {
     public static final int DATA_NOT_IMPORT = 12;
     public static final int APPLICANT_INFO_NOT_FILL = 13;
     public static final int APPLICANT_CREATE_SUCCESS = 14;
+    public static final int LIST_USER_SUCCESS = 15;
+    public static final int MALFORMED_URL  = 16;
+    public static final int DOWNLOAD_ERROR = 17;
+    public static final int DOWNLOAD_FROM_URL_SUCCESS = 18;
+    public static final int READ_DATA_ERROR = 19;
 
     public static final Map<Integer, String> messages = new HashMap<Integer,String>(){{
         put(AppConstant.CHECK_DOWNLOAD_DATA_SUCCES, "Download Data Success");
@@ -44,6 +49,9 @@ public class AppConstant {
         put(AppConstant.DATA_NOT_IMPORT,"You need to import data");
         put(AppConstant.APPLICANT_INFO_NOT_FILL,"Please insert full name, phone");
         put(AppConstant.APPLICANT_CREATE_SUCCESS,"Add User Success");
+        put(AppConstant.MALFORMED_URL,"URL Not found");
+        put(AppConstant.DOWNLOAD_ERROR,"Download Error");
+        put(AppConstant.READ_DATA_ERROR,"Read Data Error");
     }};
 
 

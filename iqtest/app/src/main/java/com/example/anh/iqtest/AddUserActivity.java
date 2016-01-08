@@ -2,24 +2,19 @@ package com.example.anh.iqtest;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.anh.constant.AppConstant;
 import com.example.anh.database.DBAdapter;
-import com.example.anh.database.DatabaseHandler;
-import com.example.anh.database.UserModel;
+import com.example.anh.model.UserModel;
 import com.example.anh.listener.CustomListener;
 import com.example.anh.task.CreateDataTask;
 import com.example.anh.utils.NoticeDialog;
 
 import java.sql.SQLException;
-import java.util.Objects;
 
 public class AddUserActivity extends CustomBarWithHeaderActivity {
 
@@ -30,7 +25,11 @@ public class AddUserActivity extends CustomBarWithHeaderActivity {
         @Override
         public void onNotifyStatusCreate(int status) {
             if(status == AppConstant.APPLICANT_CREATE_SUCCESS) {
-                NoticeDialog.showNoticeDialog(mActivity,"Messages",AppConstant.messages.get(AppConstant.APPLICANT_CREATE_SUCCESS));
+                //NoticeDialog.showNoticeDialog(mActivity,"Messages",AppConstant.messages.get(AppConstant.APPLICANT_CREATE_SUCCESS));
+                //go to screen user list
+                Intent intent = new Intent(mActivity, ViewUserActivity.class);
+                startActivity(intent);
+                mActivity.finish();
             }
         };
 
@@ -49,6 +48,7 @@ public class AddUserActivity extends CustomBarWithHeaderActivity {
             EditText phoneTextView = (EditText)findViewById(R.id.add_user_phone);
             if(fullNameTextView.getText().toString().equals("") || phoneTextView.getText().toString().equals("")) {
                 NoticeDialog.showNoticeDialog(mActivity,"Notice", AppConstant.messages.get(AppConstant.APPLICANT_INFO_NOT_FILL));
+
             }
             else {
 //                getApplicationContext().deleteDatabase(DatabaseHandler.DATABASE_NAME);

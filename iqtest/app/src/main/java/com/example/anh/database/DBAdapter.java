@@ -3,6 +3,8 @@ package com.example.anh.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.anh.model.UserModel;
+
 import java.sql.SQLException;
 
 /**
@@ -40,8 +42,8 @@ public class DBAdapter {
         return databaseHandler.readFromId(id);
     }
 
-    public UserModel[] readAll() {
-        return databaseHandler.selectAll();
+    public UserModel[] readAll(String filter) {
+        return databaseHandler.selectAll(filter);
     }
 
     public void queryDataBase() {

@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.example.anh.model.UserModel;
+
 public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "users";
     public static final String TAG = "DatabaseHandler.java";
@@ -55,9 +57,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public UserModel[] selectAll() {
+    public UserModel[] selectAll(String filter) {
         String sql = "";
-        sql += "SELECT * FROM " + tableName;
+        if(filter.equals("")) {
+            sql += "SELECT * FROM " + tableName;
+        }
+        else {
+            sql += "SELECT * FROM " + tableName + " WHERE " + fieldObjectFullName + " LIKE '%" + filter + "%'";
+        }
+
 
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -70,9 +78,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 UserModel user = new UserModel();
                 user.setFullName(cursor.getString(cursor.getColumnIndex(fieldObjectFullName)));
                 user.setPhone(cursor.getString(cursor.getColumnIndex(fieldObjectPhone)));
-                user.setTotalQuestions(Integer.getInteger(cursor.getString(cursor.getColumnIndex(fieldTotalQuestions))));
-                user.setTotalCompletedQuestions(Integer.getInteger(cursor.getString(cursor.getColumnIndex(fieldNumberCompletedQuestion))));
-                user.setNumsRightAnswers(Integer.getInteger(cursor.getString(cursor.getColumnIndex(fieldNumberRightAnswers))));
+                if(!cursor.getString(cursor.getColumnIndex(fieldTotalQuestions)).equals("")) {
+                    user.setTotalQuestions(Integer.parseInt(cursor.getString(cursor.getColumnIndex(fieldTotalQuestions))));
+                }
+                if(!cursor.getString(cursor.getColumnIndex(fieldNumberCompletedQuestion)).equals("")) {
+                    user.setTotalCompletedQuestions(Integer.parseInt(cursor.getString(cursor.getColumnIndex(fieldNumberCompletedQuestion))));
+                }
+                if(!cursor.getString(cursor.getColumnIndex(fieldNumberRightAnswers)).equals("")) {
+                    user.setNumsRightAnswers(Integer.parseInt(cursor.getString(cursor.getColumnIndex(fieldNumberRightAnswers))));
+                }
+
                 objectItemData[x] = user;
                 x++;
             } while (cursor.moveToNext());
@@ -96,9 +111,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 UserModel user = new UserModel();
                 user.setFullName(cursor.getString(cursor.getColumnIndex(fieldObjectFullName)));
                 user.setPhone(cursor.getString(cursor.getColumnIndex(fieldObjectPhone)));
-                user.setTotalQuestions(Integer.getInteger(cursor.getString(cursor.getColumnIndex(fieldTotalQuestions))));
-                user.setTotalCompletedQuestions(Integer.getInteger(cursor.getString(cursor.getColumnIndex(fieldNumberCompletedQuestion))));
-                user.setNumsRightAnswers(Integer.getInteger(cursor.getString(cursor.getColumnIndex(fieldNumberRightAnswers))));
+                if(!cursor.getString(cursor.getColumnIndex(fieldTotalQuestions)).equals("")) {
+                    user.setTotalQuestions(Integer.parseInt(cursor.getString(cursor.getColumnIndex(fieldTotalQuestions))));
+                }
+                if(!cursor.getString(cursor.getColumnIndex(fieldNumberCompletedQuestion)).equals("")) {
+                    user.setTotalCompletedQuestions(Integer.parseInt(cursor.getString(cursor.getColumnIndex(fieldNumberCompletedQuestion))));
+                }
+                if(!cursor.getString(cursor.getColumnIndex(fieldNumberRightAnswers)).equals("")) {
+                    user.setNumsRightAnswers(Integer.parseInt(cursor.getString(cursor.getColumnIndex(fieldNumberRightAnswers))));
+                }
+
                 objectItemData[x] = user;
                 x++;
             } while (cursor.moveToNext());

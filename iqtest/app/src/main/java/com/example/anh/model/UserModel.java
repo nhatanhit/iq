@@ -1,4 +1,6 @@
-package com.example.anh.database;
+package com.example.anh.model;
+
+import java.net.Inet4Address;
 
 /**
  * Created by anh on 1/5/16.
@@ -11,6 +13,12 @@ public class UserModel {
     private Integer numberCompletedQuestions = 0;
     private Integer numberRightAnswers = 0;
 
+    //constructor
+    public UserModel() {
+        this.totalQuestions = 0;
+        this.numberCompletedQuestions = 0;
+        this.numberRightAnswers = 0;
+    }
 
     public String getFullName() {
         return fullName;
@@ -27,25 +35,25 @@ public class UserModel {
         return this.phone;
     }
 
-    public int getTotalQuestions() {
+    public Integer getTotalQuestions() {
         return totalQuestions;
     }
-    public int setTotalQuestions(Integer total) {
+    public Integer setTotalQuestions(Integer total) {
         totalQuestions = total;
         return this.totalQuestions;
     }
 
-    public int getTotalCompletedQuestions() {
+    public Integer getTotalCompletedQuestions() {
         return numberCompletedQuestions;
     }
-    public int setTotalCompletedQuestions(Integer count) {
+    public Integer setTotalCompletedQuestions(Integer count) {
         numberCompletedQuestions = count;
         return numberCompletedQuestions;
     }
-    public int getNumsRightAnswers() {
+    public Integer getNumsRightAnswers() {
         return numberRightAnswers;
     }
-    public int setNumsRightAnswers(int numberRightAnswers) {
+    public Integer setNumsRightAnswers(int numberRightAnswers) {
         this.numberRightAnswers = numberRightAnswers;
         return this.numberRightAnswers;
     }
