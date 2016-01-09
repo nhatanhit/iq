@@ -6,6 +6,8 @@ package com.example.anh.model;
 public class QuestionModel {
     private String questionImagePath;
     private String answerImagePath;
+    private Integer numberAnswers;
+    private Integer rightChoice;
 
     public String getQuestionImagePath() {
         return questionImagePath;
@@ -23,7 +25,19 @@ public class QuestionModel {
         return questionImagePath;
     }
 
+    public Integer getNumberAnswers() {
+        return  numberAnswers;
+    }
+    public Integer setNumberAnswers(Integer nums) {
+        numberAnswers = nums;
+        return numberAnswers;
+    }
 
-
-
+    public Integer getRightChoice() {
+        return rightChoice;
+    }
+    public Integer setRightChoice(Integer r) {
+        rightChoice = r;
+        return rightChoice;
+    }
 }

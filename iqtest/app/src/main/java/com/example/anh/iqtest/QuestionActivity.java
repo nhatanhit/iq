@@ -97,7 +97,7 @@ public class QuestionActivity extends CustomBarWithHeaderActivity {
         viewNextQuestion.setOnClickListener(nextQuestionClick);
         viewPreviousQuestions.setOnClickListener(prevQuestionClick);
 
-        makeAnswerGui(3);
+
     }
 
     /**
@@ -112,9 +112,14 @@ public class QuestionActivity extends CustomBarWithHeaderActivity {
                 JSONObject questionObject = listQuestions.getJSONObject(i);
                 String questionPath = questionObject.getString("question_data");
                 String answerPath = questionObject.getString("answers");
+                Integer numAnswers = Integer.parseInt(questionObject.getString("num_answers_per_question"));
+                Integer rightChoice = Integer.parseInt(questionObject.getString("right_choice"));
                 QuestionModel question = new QuestionModel();
                 question.setAnswerImagePath(answerPath);
                 question.setQuestionImagePath(questionPath);
+                question.setNumberAnswers(numAnswers);
+                question.setRightChoice(rightChoice);
+
                 listQuestion.add(question);
 
             }
@@ -155,9 +160,14 @@ public class QuestionActivity extends CustomBarWithHeaderActivity {
             }
 
         }
+        QuestionModel questionModel = listQuestion.get(currentQuestion);
+        makeAnswerGui(questionModel.getNumberAnswers(),questionModel.getRightChoice());
+
+
     }
 
-    private void makeAnswerGui(int numberAnswer) {
+    private void makeAnswerGui(int numberAnswer,int rightChoice) {
+        this.tableAnswer.removeAllViewsInLayout();
         int row = 0;
 
         int col = (numberAnswer % 4);
@@ -172,7 +182,13 @@ public class QuestionActivity extends CustomBarWithHeaderActivity {
             TableRow tableRow =  addAnswerTableRow(4);
             for(int j = 0; j < 4; j++) {
                 if(((i  * 4) + j + 1 <= numberAnswer)) {
-                    makeTableCell(tableRow,false,(i * 4) + j+1);
+                    if((i * 4) + j + 1 == rightChoice) {
+                        makeTableCell(tableRow,true,(i * 4) + j+1);
+                    }
+                    else {
+                        makeTableCell(tableRow,false,(i * 4) + j+1);
+                    }
+
                 }
             }
         }

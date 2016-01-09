@@ -51,7 +51,7 @@ public class ImportDataActivity extends CustomBarWithHeaderActivity {
                 mProgressDialog.setMessage("Check Data Progress");
                 mProgressDialog.setProgress(100);
                 String zipFile = Environment.getExternalStorageDirectory() + "/data.zip";
-                String unzipLocation = Environment.getExternalStorageDirectory() + "/unzipped/";
+                String unzipLocation = Environment.getExternalStorageDirectory() + "/unzipped";
                 CheckDataTask checkDataTask = new CheckDataTask(getApplicationContext(),this);
                 String[] paths = new String[]{zipFile,unzipLocation};
                 checkDataTask.execute(paths);

@@ -21,6 +21,10 @@
             android:layout_gravity="left|center"
             android:id="@+id/custom_with_header_back" />
         <TextView
+            android:shadowColor="@color/color_black"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"

@@ -7,6 +7,7 @@ import com.example.anh.constant.AppConstant;
 import com.example.anh.listener.CustomListener;
 import com.example.anh.utils.Json;
 import com.example.anh.utils.KeyValueDb;
+import com.example.anh.utils.NoticeDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,7 +75,11 @@ public class CheckDataTask extends AsyncTask<String,Integer,Integer> {
     @Override
     protected void onPostExecute(Integer integer) {
         super.onPostExecute(integer);
-        progressListener.onFinishCheckDataZip(integer,numberOfQuestions.toString());
+        if(integer != AppConstant.JSON_QUESTION_DATA_NOT_FOUND) {
+            progressListener.onFinishCheckDataZip(integer,numberOfQuestions.toString());
+        }
+
+
     }
 
     private int checkData(JSONObject jObj,String imageDirectoryPath) {
@@ -82,7 +87,7 @@ public class CheckDataTask extends AsyncTask<String,Integer,Integer> {
             int numQuestions =  Integer.parseInt(jObj.getString("num_questions"),10);
             this.numberOfQuestions = numQuestions;
 
-            int numAnswersPerQuestions = Integer.parseInt(jObj.getString("num_answers_per_question"),10);
+
 
             ArrayList<String> questionsPath = new ArrayList<String>();
             ArrayList<String> answersPath = new ArrayList<String>();
