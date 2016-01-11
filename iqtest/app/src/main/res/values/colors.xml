@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+    <!--http://stackoverflow.com/questions/15852122/hex-transparency-in-colors-->
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
@@ -13,6 +14,7 @@
     <color name="color_number_of_correct">#bd1817</color>
     <color name="color_number_of_sentence">#ad7c2c</color>
     <color name="color_white_transparent_40">#66FFFFFF</color>
+    <color name="color_white_transparent_20">#0DFFFFFF</color>
     <color name="color_white_transparent_70">#B3FFFFFF</color>
     <color name="color_white_transparent_30">#4DFFFFFF</color>
     <color name="color_table_row_border">#b68c4f</color>

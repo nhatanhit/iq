@@ -39,6 +39,8 @@ public class QuestionActivity extends CustomBarWithHeaderActivity {
     private Integer currentQuestion;
     private ImageView currentQuestionView,currentAnswerView;
     private TableLayout tableAnswer;
+
+
     String unzippedPath;
     View.OnClickListener nextQuestionClick = new View.OnClickListener(){
         @Override
@@ -46,8 +48,8 @@ public class QuestionActivity extends CustomBarWithHeaderActivity {
             currentQuestion = currentQuestion + 1;
             if(currentQuestion >= listQuestion.size()) {
                 currentQuestion = 0;
-            }
 
+            }
             switchImage(currentQuestion);
 
         }
@@ -60,7 +62,6 @@ public class QuestionActivity extends CustomBarWithHeaderActivity {
             if(currentQuestion < 0) {
                 currentQuestion = 0;
             }
-
             switchImage(currentQuestion);
         }
     };
@@ -71,6 +72,8 @@ public class QuestionActivity extends CustomBarWithHeaderActivity {
         currentQuestionView = (ImageView)findViewById(R.id.view_question_image);
         currentAnswerView = (ImageView)findViewById(R.id.view_answer_image);
         tableAnswer = (TableLayout)findViewById(R.id.view_table_answer);
+
+
 
         unzippedPath = Environment.getExternalStorageDirectory() + "/unzipped/data/image/";
         mActivity = this;
@@ -84,7 +87,7 @@ public class QuestionActivity extends CustomBarWithHeaderActivity {
             }
         };
         bindEvents();
-        onSetHeaderText("Interview IQ Test");
+        onSetHeaderText("View Question/Answers");
 
         parseData();
 
@@ -175,7 +178,7 @@ public class QuestionActivity extends CustomBarWithHeaderActivity {
             row = (numberAnswer / 4) + 1;
         }
         else {
-            row = numberAnswer;
+            row = numberAnswer / 4;
         }
 
         for(int i = 0; i < row ; i++) {
@@ -207,7 +210,8 @@ public class QuestionActivity extends CustomBarWithHeaderActivity {
         }
 
         TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,TableLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(0,10,0,0);
+        layoutParams.setMargins(0, 10, 0, 0);
+//        tableRow.setPadding(0,5,0,5);
         tableRow.setLayoutParams(layoutParams);
         tableAnswer.addView(tableRow);
         //Add view to table

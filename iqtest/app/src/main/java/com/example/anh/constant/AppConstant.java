@@ -34,6 +34,8 @@ public class AppConstant {
     public static final int DOWNLOAD_FROM_URL_SUCCESS = 18;
     public static final int READ_DATA_ERROR = 19;
 
+    public static final Integer ANSWER_TAG = 20;
+
     public static final Map<Integer, String> messages = new HashMap<Integer,String>(){{
         put(AppConstant.CHECK_DOWNLOAD_DATA_SUCCES, "Download Data Success");
         put(AppConstant.DOWNLOAD_DATA_ERROR_FAILED_CHECKSUM, "Downloaded Data Failed Checksum");

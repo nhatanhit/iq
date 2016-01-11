@@ -3,6 +3,6 @@
     <solid
         android:color="@color/color_button_user_guide_background"/>
     <size
-        android:width="35dp"
-        android:height="35dp"/>
+        android:width="25dp"
+        android:height="25dp"/>
 </shape>

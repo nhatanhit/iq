@@ -1,15 +1,11 @@
 package com.example.anh.task;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.util.Log;
 
 import com.example.anh.constant.AppConstant;
 import com.example.anh.listener.CustomListener;
-import com.example.anh.utils.Decompress;
 
 import java.io.File;
 import java.io.FileInputStream;
