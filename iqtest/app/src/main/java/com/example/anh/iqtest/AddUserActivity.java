@@ -37,6 +37,11 @@ public class AddUserActivity extends CustomBarWithHeaderActivity {
         public void onNotifyStatusSelect(int status,Object[] o) {
             //Nothing to implement
         }
+
+        @Override
+        public void onNotifyStatusUpdate(int status) {
+
+        }
     };
 
 

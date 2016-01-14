@@ -11,35 +11,35 @@ import java.util.TimerTask;
  * Created by Dell on 07/01/2016.
  */
 public class CountTimerTask extends TimerTask {
-    private Integer hour = 0;
     private Integer min = 0;
-    private Integer allow_hour;
+    private Integer second = 0;
     private Integer allow_min;
+    private Integer allow_second;
     private CustomListener.TimeChange timeChangeListener;
     private Activity mActivity;
-    public CountTimerTask(CustomListener.TimeChange l,Integer allowHour,Integer allowMin,Activity a) {
-        this.hour = 0;
+    public CountTimerTask(CustomListener.TimeChange l,Integer allowMin,Integer allowSecond,Activity a) {
+        this.second = 0;
         this.min = 0;
         this.timeChangeListener = l;
-        this.allow_hour = allowHour;
         this.allow_min = allowMin;
+        this.allow_second = allowSecond;
         this.mActivity = a;
     }
     public void run() {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(min == 60) {
-                    hour = hour + 1;
-                    min = 0;
+                if(second == 60) {
+                    min = min + 1;
+                    second = 0;
                 }
-                if(hour.equals(allow_hour) && min.equals(allow_min)) {
+                if(min.equals(allow_min) && second.equals(allow_second)) {
                     timeChangeListener.onNotifyDurationEnd();
                 }
-                timeChangeListener.onNotifyDurationChange(hour,min);
+                timeChangeListener.onNotifyDurationChange(min,second);
             }
         });
-        min = min + 1;
+        second = second + 1;
 
     }
 }

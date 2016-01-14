@@ -11,13 +11,17 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.anh.constant.AppConstant;
+import com.example.anh.database.DatabaseHandler;
 import com.example.anh.model.UserModel;
 import com.example.anh.listener.CustomListener;
 import com.example.anh.task.GetUserDataTask;
+import com.example.anh.utils.KeyValueDb;
+import com.example.anh.utils.NoticeDialog;
 
 public class ViewUserActivity extends CustomBarWithSearchActivity  {
     private Activity mActivity;
     private TableLayout listUserTable;
+
     private CustomListener.onAsynTaskSQLiteDatabase listener = new CustomListener.onAsynTaskSQLiteDatabase() {
         @Override
         public void onNotifyStatusCreate(int status) {
@@ -34,6 +38,11 @@ public class ViewUserActivity extends CustomBarWithSearchActivity  {
                 }
             }
         }
+
+        @Override
+        public void onNotifyStatusUpdate(int status) {
+
+        }
     };
 
 
@@ -43,9 +52,18 @@ public class ViewUserActivity extends CustomBarWithSearchActivity  {
     private View.OnClickListener userInfoClick = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(mActivity, InterviewerTestActivity.class);
-            startActivity(intent);
-            mActivity.finish();
+            if(!KeyValueDb.getValue(getApplicationContext(), "allow_minute").equals("") &&
+                    !KeyValueDb.getValue(getApplicationContext(), "allow_second").equals("")) {
+                Integer userId = Integer.parseInt(v.getTag().toString());
+                Intent intent = new Intent(mActivity, InterviewerTestActivity.class);
+                intent.putExtra("user_id",userId);
+                startActivity(intent);
+                mActivity.finish();
+            }
+            else {
+                NoticeDialog.showNoticeDialog(mActivity,"Notice",AppConstant.messages.get(AppConstant.DURATION_NOT_SET));
+            }
+
         }
     };
 
@@ -54,8 +72,15 @@ public class ViewUserActivity extends CustomBarWithSearchActivity  {
         View userRowView = inflater.inflate(R.layout.table_row_user,null);
 
         RelativeLayout userInfoLayout = (RelativeLayout)userRowView.findViewById(R.id.user_info);
-        userInfoLayout.setOnClickListener(userInfoClick);
 
+        if(u.getIsCompleted() == 0) {
+            userInfoLayout.setOnClickListener(userInfoClick);
+        }
+
+
+
+
+        userInfoLayout.setTag(u.getId());
         TextView txtView = (TextView)userRowView.findViewById(R.id.text_view_user_name);
         txtView.setText(u.getFullName());
 
@@ -105,7 +130,8 @@ public class ViewUserActivity extends CustomBarWithSearchActivity  {
         String[] params = new String[] {""};
         listUserTask.execute(params);
 
-        //onSearch
+        //drop database
+//        getApplicationContext().deleteDatabase(DatabaseHandler.DATABASE_NAME);
 
     }
 }

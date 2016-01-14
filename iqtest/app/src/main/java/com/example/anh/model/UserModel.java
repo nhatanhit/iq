@@ -12,13 +12,24 @@ public class UserModel {
     private Integer totalQuestions = 0;
     private Integer numberCompletedQuestions = 0;
     private Integer numberRightAnswers = 0;
+    private Integer isCompleted = 0;
 
     //constructor
     public UserModel() {
         this.totalQuestions = 0;
         this.numberCompletedQuestions = 0;
         this.numberRightAnswers = 0;
+        this.isCompleted = 0;
     }
+
+    public Integer getId() {
+        return id;
+    }
+    public Integer setId(Integer id) {
+        this.id = id;
+        return this.id;
+    }
+
 
     public String getFullName() {
         return fullName;
@@ -58,4 +69,10 @@ public class UserModel {
         return this.numberRightAnswers;
     }
 
+    public Integer getIsCompleted() {
+        return  this.isCompleted;
+    }
+    public void setIsCompleted(Integer isCompleted) {
+        this.isCompleted = isCompleted;
+    }
 }

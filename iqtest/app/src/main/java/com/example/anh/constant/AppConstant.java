@@ -33,8 +33,16 @@ public class AppConstant {
     public static final int DOWNLOAD_ERROR = 17;
     public static final int DOWNLOAD_FROM_URL_SUCCESS = 18;
     public static final int READ_DATA_ERROR = 19;
-
-    public static final Integer ANSWER_TAG = 20;
+    public static final int UPDATE_DATA_SUCCESS = 20;
+    public static final int UPDATE_DATA_FAILED = 21;
+    public static final int SAME_OLD_URL = 22;
+    public static final int WRONG_FORMAT_DATA_URL = 23;
+    public static final int CREATE_DIRECTORY_SUCCESS = 24;
+    public static final int CREATE_DIRECTORY_FAILED = 25;
+    public static final int DIRECTORY_IS_EXISTED = 26;
+    public static final int DURATION_NOT_SET = 27;
+    public static final int CONNECTION_ERROR = 29;
+    public static final int DOWNLOAD_NOT_FOUND = 30;
 
     public static final Map<Integer, String> messages = new HashMap<Integer,String>(){{
         put(AppConstant.CHECK_DOWNLOAD_DATA_SUCCES, "Download Data Success");
@@ -54,6 +62,11 @@ public class AppConstant {
         put(AppConstant.MALFORMED_URL,"URL Not found");
         put(AppConstant.DOWNLOAD_ERROR,"Download Error");
         put(AppConstant.READ_DATA_ERROR,"Read Data Error");
+        put(AppConstant.SAME_OLD_URL,"Data in this URL has been downloaded");
+        put(AppConstant.WRONG_FORMAT_DATA_URL,"Wrong Format Data URL");
+        put(AppConstant.DURATION_NOT_SET,"Duration Not Set");
+        put(AppConstant.CONNECTION_ERROR,"Connection Error");
+        put(AppConstant.DOWNLOAD_NOT_FOUND,"Data Download Not Found");
     }};
 
 

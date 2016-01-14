@@ -17,7 +17,12 @@ import com.example.anh.task.CheckDataTask;
 import com.example.anh.task.DeleteFolderTask;
 import com.example.anh.task.DownloadTask;
 import com.example.anh.task.UnzippingTask;
+import com.example.anh.utils.FileMainpulation;
 import com.example.anh.utils.KeyValueDb;
+import com.example.anh.utils.NoticeDialog;
+import com.example.anh.utils.Utils;
+
+import java.io.File;
 
 public class ImportDataActivity extends CustomBarWithHeaderActivity {
 
@@ -31,6 +36,7 @@ public class ImportDataActivity extends CustomBarWithHeaderActivity {
         @Override
         public void onProgressExtract(int percentageCompleted) {
             mProgressDialog.setProgress(percentageCompleted);
+
         }
 
         @Override
@@ -39,7 +45,7 @@ public class ImportDataActivity extends CustomBarWithHeaderActivity {
                 mProgressDialog.setMessage("Check Data Progress");
                 mProgressDialog.setProgress(100);
                 String zipFile = Environment.getExternalStorageDirectory() + "/data.zip";
-                String unzipLocation = Environment.getExternalStorageDirectory() + "/unzipped";
+                String unzipLocation = Environment.getExternalStorageDirectory() + "/tmp";
                 CheckDataTask checkDataTask = new CheckDataTask(getApplicationContext(),this);
                 String[] paths = new String[]{zipFile,unzipLocation};
                 checkDataTask.execute(paths);
@@ -50,6 +56,15 @@ public class ImportDataActivity extends CustomBarWithHeaderActivity {
         @Override
         public void onFinishCheckDataZip(int status,String extra) {
             if(status == AppConstant.CHECK_DOWNLOAD_DATA_SUCCES) {
+                //move data to another folder
+                String srcDataDir = Environment.getExternalStorageDirectory() + "/tmp";
+                String desDataDir = Environment.getExternalStorageDirectory() + "/unzipped";
+
+
+                File src = new File(srcDataDir);
+                File des = new File(desDataDir);
+                src.renameTo(des);
+
                 mProgressDialog.dismiss();
                 //set number of questions
                 if(extra.equals("")) {
@@ -71,6 +86,7 @@ public class ImportDataActivity extends CustomBarWithHeaderActivity {
             }
             else {
                 mProgressDialog.setMessage("Failed when zip file, delete data...");
+                KeyValueDb.setValue(getApplicationContext(), "question_data_url", "");
                 //execute asyntask
                 String[] paths = new String[]{zipFileLocation,unzipDirLocation};
                 DeleteFolderTask deleteTask = new DeleteFolderTask(this,status);
@@ -117,7 +133,7 @@ public class ImportDataActivity extends CustomBarWithHeaderActivity {
                 mProgressDialog.setProgress(0);
 
                 String zipFile = Environment.getExternalStorageDirectory() + "/data.zip";
-                String unzipLocation = Environment.getExternalStorageDirectory() + "/unzipped/";
+                String unzipLocation = Environment.getExternalStorageDirectory() + "/tmp/";
                 UnzippingTask unzipTask = new UnzippingTask(getApplicationContext(),unzipCallback,zipFile,unzipLocation);
 
                 zipFileLocation = zipFile;
@@ -128,6 +144,7 @@ public class ImportDataActivity extends CustomBarWithHeaderActivity {
             }
             else {
                 mProgressDialog.dismiss();
+                NoticeDialog.showNoticeDialog(mActivity,"Notice",AppConstant.messages.get(status));
                 KeyValueDb.setValue(getApplicationContext(),"question_data_url","");
             }
         }
@@ -143,16 +160,29 @@ public class ImportDataActivity extends CustomBarWithHeaderActivity {
         @Override
         public void onClick(View v) {
             //execute asyntask
+            String oldUrl = KeyValueDb.getValue(getApplicationContext(),"question_data_url");
             String url = downloadText.getText().toString();
-            if(!url.isEmpty()) {
-                DownloadTask downloadTask = new DownloadTask(getApplicationContext(),downloadCallback);
-                currentTask = downloadTask;
-                String[] urls = new String[] {url};
-
-                KeyValueDb.setValue(getApplicationContext(),"question_data_url",urls[0]);
-
-                downloadTask.execute(urls);
+            if(url.equals(oldUrl)) {
+                NoticeDialog.showNoticeDialog(mActivity,"Notice",AppConstant.messages.get(AppConstant.SAME_OLD_URL));
             }
+            else {
+                if(!url.isEmpty()) {
+                    if(Utils.checkDataUrl(url)) {
+                        DownloadTask downloadTask = new DownloadTask(getApplicationContext(),downloadCallback);
+                        currentTask = downloadTask;
+                        String[] urls = new String[] {url};
+
+                        KeyValueDb.setValue(getApplicationContext(),"question_data_url",urls[0]);
+
+                        downloadTask.execute(urls);
+                    }
+                    else {
+                        NoticeDialog.showNoticeDialog(mActivity,"Notice",AppConstant.messages.get(AppConstant.WRONG_FORMAT_DATA_URL));
+                    }
+
+                }
+            }
+
 
         }
     };
@@ -173,6 +203,8 @@ public class ImportDataActivity extends CustomBarWithHeaderActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_import_data);
         Button btnImportData = (Button)findViewById(R.id.btn_import_data);
+        Button btnNavigateUserGuide = (Button)findViewById(R.id.btn_navigate_user_guide);
+
         downloadText = (EditText)findViewById(R.id.download_link);
 
 
@@ -182,15 +214,25 @@ public class ImportDataActivity extends CustomBarWithHeaderActivity {
         mProgressDialog.setMessage("Download Progress");
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         mProgressDialog.setCancelable(true);
+        mProgressDialog.setProgressNumberFormat(null);
         mProgressDialog.setCanceledOnTouchOutside(false);
 
         KeyValueDb.getPrefs(getApplicationContext());
         String questionDataUrl =  KeyValueDb.getValue(getApplicationContext(),"question_data_url");
         if(!questionDataUrl.isEmpty()) {
-            downloadText.setText(questionDataUrl);
+            downloadText.setHint(questionDataUrl);
         }
 
         btnImportData.setOnClickListener(importClick);
+
+        btnNavigateUserGuide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mActivity, UserGuideActivity.class);
+                startActivity(intent);
+                mActivity.finish();
+            }
+        });
 
         onClickBackListener = new View.OnClickListener(){
             @Override
@@ -202,5 +244,6 @@ public class ImportDataActivity extends CustomBarWithHeaderActivity {
         };
         bindEvents();
         onSetHeaderText("Import Data");
+        setupUI(findViewById(R.id.layout_import_data));
     }
 }

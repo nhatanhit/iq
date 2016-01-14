@@ -10,7 +10,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.example.anh.constant.AppConstant;
 import com.example.anh.model.UserModel;
+
+import java.util.HashMap;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "users";
@@ -23,6 +26,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public String fieldTotalQuestions = "total_questions";
     public String fieldNumberCompletedQuestion = "number_completed_questions";
     public String fieldNumberRightAnswers = "number_right_answers";
+    public String fieldIsCompleted = "completed";
 
     private static final int DATABASE_VERSION = 5;
 
@@ -37,12 +41,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         sql += "CREATE TABLE " + tableName;
         sql += " ( ";
-        sql += fieldObjectId + " INTEGER PRIMARY KEY AUTOINCREMENT, ";
+        sql += fieldObjectId + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ";
         sql += fieldObjectFullName + " TEXT, ";
         sql += fieldObjectPhone + " TEXT, ";
         sql += fieldTotalQuestions + " INTEGER, ";
         sql += fieldNumberCompletedQuestion + " INTEGER, " ;
-        sql += fieldNumberRightAnswers + " INTEGER " ;
+        sql += fieldNumberRightAnswers + " INTEGER, " ;
+        sql += fieldIsCompleted + " INTEGER " ;
         sql += " ) ";
 
         db.execSQL(sql);
@@ -76,6 +81,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 UserModel user = new UserModel();
+                user.setId(cursor.getInt(cursor.getColumnIndex(fieldObjectId)));
                 user.setFullName(cursor.getString(cursor.getColumnIndex(fieldObjectFullName)));
                 user.setPhone(cursor.getString(cursor.getColumnIndex(fieldObjectPhone)));
                 if(!cursor.getString(cursor.getColumnIndex(fieldTotalQuestions)).equals("")) {
@@ -86,6 +92,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 }
                 if(!cursor.getString(cursor.getColumnIndex(fieldNumberRightAnswers)).equals("")) {
                     user.setNumsRightAnswers(Integer.parseInt(cursor.getString(cursor.getColumnIndex(fieldNumberRightAnswers))));
+                }
+                if(!cursor.getString(cursor.getColumnIndex(fieldIsCompleted)).equals("")) {
+                    user.setIsCompleted(Integer.parseInt(cursor.getString(cursor.getColumnIndex(fieldIsCompleted))));
                 }
 
                 objectItemData[x] = user;
@@ -120,7 +129,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 if(!cursor.getString(cursor.getColumnIndex(fieldNumberRightAnswers)).equals("")) {
                     user.setNumsRightAnswers(Integer.parseInt(cursor.getString(cursor.getColumnIndex(fieldNumberRightAnswers))));
                 }
-
+                if(!cursor.getString(cursor.getColumnIndex(fieldIsCompleted)).equals("")) {
+                    user.setIsCompleted(Integer.parseInt(cursor.getString(cursor.getColumnIndex(fieldIsCompleted))));
+                }
                 objectItemData[x] = user;
                 x++;
             } while (cursor.moveToNext());
@@ -152,7 +163,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return recordExists;
     }
+    public Integer updateUserInfo(UserModel user,Integer userId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Integer updateOk ;
+        Integer returnStatus;
 
+        ContentValues values = new ContentValues();
+
+        values.put(fieldTotalQuestions,user.getTotalQuestions());
+        values.put(fieldNumberRightAnswers,user.getNumsRightAnswers());
+        values.put(fieldNumberCompletedQuestion, user.getTotalCompletedQuestions());
+        values.put(fieldIsCompleted,user.getIsCompleted());
+        updateOk =  db.update(tableName, values, String.format("%s = ?", "id"), new String[]{userId.toString()});
+        if(updateOk > 0) {
+            returnStatus = AppConstant.UPDATE_DATA_SUCCESS;
+        }
+        else {
+            returnStatus = AppConstant.UPDATE_DATA_FAILED;
+        }
+        return returnStatus;
+    }
     public boolean create(UserModel user) {
 
         boolean createSuccessful = false;
@@ -167,6 +197,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             values.put(fieldTotalQuestions,user.getTotalQuestions());
             values.put(fieldNumberRightAnswers,user.getNumsRightAnswers());
             values.put(fieldNumberCompletedQuestion, user.getTotalCompletedQuestions());
+            values.put(fieldIsCompleted,user.getIsCompleted());
             createSuccessful = db.insert(tableName, null, values) > 0;
 
             if (createSuccessful) {

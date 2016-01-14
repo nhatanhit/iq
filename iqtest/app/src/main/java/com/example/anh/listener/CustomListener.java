@@ -10,11 +10,11 @@ import java.util.Objects;
  */
 public  class CustomListener {
     public interface TimePicker {
-        void onTimeSet(android.widget.TimePicker view, Integer hourOfDay, Integer minute);
+        void onTimeSet(android.widget.TimePicker view, Integer minute, Integer second);
     };
 
     public interface TimeChange {
-        void onNotifyDurationChange(Integer hour,Integer minute);
+        void onNotifyDurationChange(Integer min,Integer second);
         void onNotifyDurationEnd();
     }
 
@@ -35,6 +35,7 @@ public  class CustomListener {
     public interface onAsynTaskSQLiteDatabase {
         void onNotifyStatusCreate(int status);
         void onNotifyStatusSelect(int status, Object[] o);
+        void onNotifyStatusUpdate(int status);
     }
     //this interface for use in abstract class, parent class, use one layout as one part of children class layout
     //So it will implement a common task(algorithm)

@@ -21,7 +21,9 @@ import android.widget.TextView;
 import com.example.anh.constant.AppConstant;
 import com.example.anh.listener.CustomListener;
 import com.example.anh.model.QuestionModel;
+import com.example.anh.model.UserModel;
 import com.example.anh.task.CountTimerTask;
+import com.example.anh.task.UpdateUserDataTask;
 import com.example.anh.utils.KeyValueDb;
 import com.example.anh.utils.NoticeDialog;
 import com.example.anh.utils.Screen;
@@ -54,7 +56,29 @@ public class InterviewerTestActivity extends CustomBarWithHeaderActivity {
 
 
     public void initializeTimerTask() {
-        timerTask = new CountTimerTask(timeChangeListener,0,3,mActivity);
+        Integer allowMinute = Integer.parseInt(KeyValueDb.getValue(getApplicationContext(),"allow_minute")) ;
+        Integer allowSecond = Integer.parseInt(KeyValueDb.getValue(getApplicationContext(),"allow_second")) ;
+        timerTask = new CountTimerTask(timeChangeListener,allowMinute,allowSecond,mActivity);
+    };
+
+    private CustomListener.onAsynTaskSQLiteDatabase dbTaskListener = new CustomListener.onAsynTaskSQLiteDatabase() {
+        @Override
+        public void onNotifyStatusCreate(int status) {
+            //Nothing to implement
+        }
+
+        @Override
+        public void onNotifyStatusSelect(int status, Object[] o) {
+            //Nothing to implement
+        }
+
+        @Override
+        public void onNotifyStatusUpdate(int status) {
+            //forward to Login Activity
+            Intent intent = new Intent(mActivity, LoginActivity.class);
+            startActivity(intent);
+            mActivity.finish();
+        }
     };
 
     private View.OnClickListener onSwitchNextQuestion = new View.OnClickListener() {
@@ -62,18 +86,41 @@ public class InterviewerTestActivity extends CustomBarWithHeaderActivity {
         public void onClick(View v) {
             currentQuestion = currentQuestion + 1;
             if(currentQuestion >= listQuestion.size()) {
-                currentQuestion = 0;
+                int countCompletedQuestions = 0;
+                for(int i = 0; i < userAnswers.size();i++) {
+                    if(!userAnswers.get(i+1).equals("")) {
+                        countCompletedQuestions++;
+                    }
+                }
+                if(countCompletedQuestions == listQuestion.size()) {
+                    stopTimer();
+                    submitTest();
+                }
+                else {
+                    //find all question is not completed
+                    for(int i = 0 ; i < userAnswers.size();i++) {
+                        if(userAnswers.get(i+1).equals("")) {
+                            currentQuestion = i;
+                            break;
+                        }
+                    }
+                    switchImage(currentQuestion);
+                }
+//                currentQuestion = 0;
             }
-            Integer iLabel = (currentQuestion + 1);
-            Integer iTotalLabel = listQuestion.size();
-            currentQuestionTextView.setText(iLabel.toString() + "/" + iTotalLabel.toString());
-            switchImage(currentQuestion);
+            else {
+                Integer iLabel = (currentQuestion + 1);
+                Integer iTotalLabel = listQuestion.size();
+                currentQuestionTextView.setText(iLabel.toString() + "/" + iTotalLabel.toString());
+                switchImage(currentQuestion);
 
-            if(!userAnswers.get(currentQuestion + 1).toString().equals("")) {
-                Integer iAnswer = Integer.parseInt(userAnswers.get(currentQuestion + 1).toString());
-                ArrayList<LinearLayout> tableCells = Screen.getAllTableCell(tableAnswer);
-                markSelectedAnswer(tableCells,iAnswer);
+                if(!userAnswers.get(currentQuestion + 1).toString().equals("")) {
+                    Integer iAnswer = Integer.parseInt(userAnswers.get(currentQuestion + 1).toString());
+                    ArrayList<LinearLayout> tableCells = Screen.getAllTableCell(tableAnswer);
+                    markSelectedAnswer(tableCells,iAnswer);
+                }
             }
+
         }
     };
 
@@ -132,8 +179,8 @@ public class InterviewerTestActivity extends CustomBarWithHeaderActivity {
 
     private CustomListener.TimeChange timeChangeListener = new CustomListener.TimeChange() {
         @Override
-        public void onNotifyDurationChange(Integer hour, Integer minute) {
-            String durationStamp = hour.toString()+ ":" + minute.toString();
+        public void onNotifyDurationChange(Integer minute, Integer second) {
+            String durationStamp = String.format("%02d",minute) + ":" + String.format("%02d",second);
             timeDurationTextView.setText(durationStamp);
         }
 
@@ -142,17 +189,14 @@ public class InterviewerTestActivity extends CustomBarWithHeaderActivity {
             stopTimer();
 
             submitTest();
-            //forward to Login Activity
-            Intent intent = new Intent(mActivity, LoginActivity.class);
-            startActivity(intent);
-            mActivity.finish();
+
 
         }
     };
     public void startTimer() {
         timer = new Timer();
         initializeTimerTask();
-        timer.schedule(timerTask,2000,60000);
+        timer.schedule(timerTask,2000,1000);
     }
     public void stopTimer() {
         if(timer != null) {
@@ -164,6 +208,10 @@ public class InterviewerTestActivity extends CustomBarWithHeaderActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        this.userId  =  intent.getIntExtra("user_id", 0);
+
         setContentView(R.layout.activity_interviewer_test);
         mActivity = this;
         bindEvents();
@@ -183,12 +231,17 @@ public class InterviewerTestActivity extends CustomBarWithHeaderActivity {
 
         bindEvents();
         this.iconBack.setVisibility(View.INVISIBLE);
-        onSetHeaderText("Test");
+        onSetHeaderText("IQ Test");
 
         switchNextQuestion.setOnClickListener(onSwitchNextQuestion);
         switchPrevQuestion.setOnClickListener(onSwitchPrevQuestion);
 
         parseData();
+
+        Integer iTotalLabel = listQuestion.size();
+        currentQuestionTextView.setText("1/" + iTotalLabel.toString());
+
+
         currentQuestion = 0;
         userAnswers = new HashMap<>(listQuestion.size());
         if(listQuestion.size() > 0) {
@@ -215,6 +268,10 @@ public class InterviewerTestActivity extends CustomBarWithHeaderActivity {
     }
 
     private void switchImage(Integer currentQuestion) {
+        Integer iTotalLabel = listQuestion.size();
+        Integer iQuestionLabel = currentQuestion + 1;
+        currentQuestionTextView.setText(iQuestionLabel.toString() + "/" + iTotalLabel.toString());
+
         String imagePath = unzippedPath + listQuestion.get(currentQuestion).getQuestionImagePath();
         File imageFile = new File(imagePath);
         if(imageFile.exists()) {
@@ -350,6 +407,14 @@ public class InterviewerTestActivity extends CustomBarWithHeaderActivity {
         }
 
         //Update to database
+        UpdateUserDataTask updateUserDataTask = new UpdateUserDataTask(mActivity,dbTaskListener,this.userId);
+        UserModel updatedData = new UserModel();
+        updatedData.setNumsRightAnswers(totalRightAnswer);
+        updatedData.setTotalQuestions(totalQuestion);
+        updatedData.setTotalCompletedQuestions(totalCompletedAnswer);
+        updatedData.setIsCompleted(1);
+        UserModel[] params = new UserModel[]{updatedData};
+        updateUserDataTask.execute(params);
 
     }
 }

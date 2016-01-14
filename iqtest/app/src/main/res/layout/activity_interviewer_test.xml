@@ -10,10 +10,14 @@
     <include layout="@layout/custom_bar_with_header"/>
 
     <LinearLayout
-        android:layout_marginTop="@dimen/space_10"
+
         android:weightSum="2"
         android:layout_width="match_parent"
+        android:paddingTop="@dimen/space_10"
+        android:paddingBottom="@dimen/space_10"
         android:orientation="horizontal"
+
+        android:background="@drawable/boder_bottom"
         android:layout_height="wrap_content">
 
         <LinearLayout

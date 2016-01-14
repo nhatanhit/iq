@@ -21,7 +21,7 @@ import java.io.IOException;
 /**
  * Created by anh on 12/28/15.
  */
-public class DownloadTask extends AsyncTask<String, Integer, String> {
+public class DownloadTask extends AsyncTask<String, Integer, Integer> {
 
     private Context context;
     private PowerManager.WakeLock mWakeLock;
@@ -55,70 +55,79 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
     }
 
     @Override
-    protected void onPostExecute(String s) {
+    protected void onPostExecute(Integer s) {
         mWakeLock.release();
-        if(s != null) {
-            Toast.makeText(context, "Download error: " + s, Toast.LENGTH_LONG).show();
-            this.listener.onProgressFinish(AppConstant.DOWNLOAD_ERROR);
-        }
-        else {
+        if(s == AppConstant.DOWNLOAD_FROM_URL_SUCCESS) {
             Toast.makeText(context,"File downloaded", Toast.LENGTH_SHORT).show();
             this.listener.onProgressFinish(AppConstant.DOWNLOAD_FROM_URL_SUCCESS);
         }
+        else {
+            this.listener.onProgressFinish(s);
+        }
+
 
     }
 
     @Override
-    protected String doInBackground(String... params) {
+    protected Integer doInBackground(String... params) {
         InputStream input = null;
         OutputStream output = null;
         HttpURLConnection connection = null;
         try {
             URL url = new URL(params[0]);
             connection = (HttpURLConnection) url.openConnection();
+
             connection.connect();
 
             // expect HTTP 200 OK, so we don't mistakenly save error report
             // instead of the file
+
             if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                return "Server returned HTTP " + connection.getResponseCode()
-                        + " " + connection.getResponseMessage();
+                return AppConstant.CONNECTION_ERROR;
+
             }
 
             // this will be useful to display download percentage
             // might be -1: server did not report the length
             int fileLength = connection.getContentLength();
+            if(connection.getContentType().equals("application/zip")) {
+                // download the file
+                input = connection.getInputStream();
 
-            // download the file
-            input = connection.getInputStream();
 
+                String outputPath = Environment.getExternalStorageDirectory() + "/data.zip";
 
-            String outputPath = Environment.getExternalStorageDirectory() + "/data.zip";
+                output = new  java.io.FileOutputStream(outputPath);
 
-            output = new  java.io.FileOutputStream(outputPath);
-
-            byte data[] = new byte[4096];
-            long total = 0;
-            int count;
-            while ((count = input.read(data)) != -1) {
-                // allow canceling with back button
-                if (isCancelled()) {
-                    input.close();
-                    return null;
+                byte data[] = new byte[4096];
+                long total = 0;
+                int count;
+                while ((count = input.read(data)) != -1) {
+                    // allow canceling with back button
+                    if (isCancelled()) {
+                        input.close();
+                        return null;
+                    }
+                    total += count;
+                    // publishing the progress....
+                    if (fileLength > 0) // only if total length is known
+                        publishProgress((int) (total * 100 / fileLength));
+                    output.write(data, 0, count);
                 }
-                total += count;
-                // publishing the progress....
-                if (fileLength > 0) // only if total length is known
-                    publishProgress((int) (total * 100 / fileLength));
-                output.write(data, 0, count);
             }
+            else {
+                return AppConstant.DOWNLOAD_NOT_FOUND;
+            }
+
         }
         catch (MalformedURLException exc) {
-            return AppConstant.messages.get(AppConstant.MALFORMED_URL);
+//            return AppConstant.messages.get(AppConstant.MALFORMED_URL);
+            return AppConstant.MALFORMED_URL;
         }
 
         catch (Exception e) {
-            return AppConstant.messages.get(AppConstant.DOWNLOAD_ERROR);
+//            return AppConstant.messages.get(AppConstant.DOWNLOAD_ERROR);
+            return AppConstant.DOWNLOAD_NOT_FOUND;
         } finally {
             try {
                 if (output != null)
@@ -132,7 +141,7 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
                 connection.disconnect();
         }
 
-        return null;
+        return AppConstant.DOWNLOAD_FROM_URL_SUCCESS;
     }
 
     @Override

@@ -46,6 +46,10 @@ public class DBAdapter {
         return databaseHandler.selectAll(filter);
     }
 
+    public Integer updateData(UserModel user,Integer userId) {
+        return databaseHandler.updateUserInfo(user,userId);
+    }
+
     public void queryDataBase() {
         databaseHandler.queryAllColumnsName();
     }

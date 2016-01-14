@@ -96,9 +96,9 @@ public class ManageActivity extends Activity implements CustomListener.TimePicke
     }
 
     @Override
-    public void onTimeSet(TimePicker view, Integer hourOfDay, Integer minute) {
+    public void onTimeSet(TimePicker view, Integer minute, Integer second) {
         //set preferences
-        KeyValueDb.setValue(getApplicationContext(),"allow_hour",hourOfDay.toString());
         KeyValueDb.setValue(getApplicationContext(),"allow_minute",minute.toString());
+        KeyValueDb.setValue(getApplicationContext(),"allow_second",second.toString());
     }
 }
