@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/bg_wood_blue"
-    tools:context="com.example.anh.iqtest.ManageActivity"
+    tools:context="com.bsp.iqtest.iqtest.ManageActivity"
     android:weightSum="2">
 
     <RelativeLayout

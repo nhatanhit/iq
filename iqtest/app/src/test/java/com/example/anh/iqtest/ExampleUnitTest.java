@@ -1,4 +1,4 @@
-package com.example.anh.iqtest;
+package com.bsp.iqtest.iqtest;
 
 import org.junit.Test;
 

@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@drawable/bg_wood_blue"
-    tools:context="com.example.anh.iqtest.HomeActivity">
+    tools:context="com.bsp.iqtest.iqtest.HomeActivity">
     <ImageView
         android:src="@drawable/logo"
         android:layout_width="wrap_content"

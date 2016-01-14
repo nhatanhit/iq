@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.example.anh.iqtest"
+        applicationId "com.bsp.iqtest.iqtest"
         minSdkVersion 11
         targetSdkVersion 23
         versionCode 1
@@ -25,4 +25,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile files('src/main/java/com/example/anh/lib/commons-io-2.4.jar')
+    compile files('src/main/java/com/example/iqtest/lib/commons-io-2.4.jar')
+    compile files('src/main/java/com/bsp/iqtest/lib/commons-io-2.4.jar')
 }

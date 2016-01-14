@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/bg_wood_2line"
-    tools:context="com.example.anh.iqtest.ViewUserActivity">
+    tools:context="com.bsp.iqtest.iqtest.ViewUserActivity">
 
     <include layout="@layout/custom_bar_with_search"/>
     <ScrollView

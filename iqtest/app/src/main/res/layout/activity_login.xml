@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.anh.iqtest.LoginActivity"
+    tools:context="com.bsp.iqtest.iqtest.LoginActivity"
     android:orientation="vertical"
     android:id="@+id/login_screen"
     android:background="@drawable/bg_wood_blue"
