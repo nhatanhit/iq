@@ -102,6 +102,20 @@ public class CheckDataTask extends AsyncTask<String,Integer,Integer> {
 
                     String answerPath = questionObject.getString("answers");
                     answersPath.add(answerPath);
+                    String sNumberAnswers = questionObject.getString("num_answers_per_question");
+                    String sRightChoice = questionObject.getString("right_choice");
+
+                    if(sNumberAnswers.equals("") || sRightChoice.equals("")) {
+                        return AppConstant.MISSING_FIELD_IN_FORMAT;
+                    }
+                    else {
+                        Integer numsAnswers = Integer.parseInt(sNumberAnswers);
+                        Integer rightChoice = Integer.parseInt(sRightChoice);
+                        if(rightChoice > numsAnswers) {
+                            return AppConstant.RIGHT_CHOICE_SETTING_WRONG;
+                        }
+                    }
+
 
                 }
 

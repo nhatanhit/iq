@@ -39,6 +39,8 @@ public class AppConstant {
     public static final int CONNECTION_ERROR = 29;
     public static final int DOWNLOAD_NOT_FOUND = 30;
     public static final int CAN_NOT_CALL_PHONE = 31;
+    public static final int RIGHT_CHOICE_SETTING_WRONG = 32;
+    public static final int MISSING_FIELD_IN_FORMAT = 33;
 
     public static final Map<Integer, String> messages = new HashMap<Integer,String>(){{
         put(AppConstant.CHECK_DOWNLOAD_DATA_SUCCES, "Download Data Success");
@@ -64,6 +66,8 @@ public class AppConstant {
         put(AppConstant.CONNECTION_ERROR,"Connection Error");
         put(AppConstant.DOWNLOAD_NOT_FOUND,"Data Download Not Found");
         put(AppConstant.CAN_NOT_CALL_PHONE,"Can not Call Phone");
+        put(AppConstant.RIGHT_CHOICE_SETTING_WRONG,"Right Choice setting wrong");
+        put(AppConstant.MISSING_FIELD_IN_FORMAT,"Missing or empty field in json file format.");
     }};
 
 
