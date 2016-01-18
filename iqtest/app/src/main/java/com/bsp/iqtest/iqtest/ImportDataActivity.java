@@ -40,16 +40,25 @@ public class ImportDataActivity extends CustomBarWithHeaderActivity {
 
         @Override
         public void onFinish(int status) {
+            String zipFile = Environment.getExternalStorageDirectory() + "/data.zip";
+            String unzipLocation = Environment.getExternalStorageDirectory() + "/tmp";
+
             if(status == AppConstant.UNZIPPING_SUCCESS_STATUS) {
                 mProgressDialog.setMessage("Check Data Progress");
                 mProgressDialog.setProgress(100);
-                String zipFile = Environment.getExternalStorageDirectory() + "/data.zip";
-                String unzipLocation = Environment.getExternalStorageDirectory() + "/tmp";
+
                 CheckDataTask checkDataTask = new CheckDataTask(getApplicationContext(),this);
                 String[] paths = new String[]{zipFile,unzipLocation};
                 checkDataTask.execute(paths);
             }
-
+            else {
+                NoticeDialog.showNoticeDialog(mActivity,"Notice",AppConstant.messages.get(status));
+                KeyValueDb.setValue(getApplicationContext(), "question_data_url", "");
+                //execute asyntask
+                String[] paths = new String[]{zipFile,unzipDirLocation};
+                DeleteFolderTask deleteTask = new DeleteFolderTask(this,status);
+                deleteTask.execute(paths);
+            }
         }
 
         @Override
@@ -150,6 +159,7 @@ public class ImportDataActivity extends CustomBarWithHeaderActivity {
 
         @Override
         public void onProgressStart() {
+            mProgressDialog.setMessage("Download Progress");
             mProgressDialog.show();
         }
     };

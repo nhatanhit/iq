@@ -37,6 +37,7 @@ public class UnzippingTask extends AsyncTask<Void,Integer,Integer> {
                 } else {
                     per++;
                     publishProgress(per);
+
                     FileOutputStream fout = new FileOutputStream(_location + ze.getName());
                     for (int c = zin.read(); c != -1; c = zin.read()) {
                         fout.write(c);

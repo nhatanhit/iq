@@ -27,6 +27,7 @@ public class CheckDataTask extends AsyncTask<String,Integer,Integer> {
     public CheckDataTask(Context context,CustomListener.onAsynTaskExtractZipProgress p) {
         this.mContext = context;
         this.progressListener = p;
+        this.numberOfQuestions = 0;
     }
 
     //Return number of questions
@@ -83,9 +84,17 @@ public class CheckDataTask extends AsyncTask<String,Integer,Integer> {
 
     private int checkData(JSONObject jObj,String imageDirectoryPath) {
         try {
-            int numQuestions =  Integer.parseInt(jObj.getString("num_questions"),10);
-            this.numberOfQuestions = numQuestions;
+            int numQuestions = 0;
+            String sNumQuestions = jObj.getString("num_questions");
+            if(sNumQuestions.equals("")) {
+                return AppConstant.MISSING_FIELD_IN_FORMAT;
+            }
+            else {
+                numQuestions =  Integer.parseInt(sNumQuestions,10);
 
+            }
+
+            this.numberOfQuestions = numQuestions;
 
 
             ArrayList<String> questionsPath = new ArrayList<String>();
@@ -98,10 +107,23 @@ public class CheckDataTask extends AsyncTask<String,Integer,Integer> {
                 for(int i = 0 ; i < listQuestions.length();i++) {
                     JSONObject questionObject = listQuestions.getJSONObject(i);
                     String questionPath = questionObject.getString("question_data");
-                    questionsPath.add(questionPath);
+                    if(questionPath.equals("")) {
+                        return AppConstant.MISSING_FIELD_IN_FORMAT;
+                    }
+                    else {
+                        questionsPath.add(questionPath);
+                    }
+
 
                     String answerPath = questionObject.getString("answers");
-                    answersPath.add(answerPath);
+                    if(answerPath.equals("")) {
+                        return AppConstant.MISSING_FIELD_IN_FORMAT;
+                    }
+                    else {
+                        answersPath.add(answerPath);
+                    }
+
+
                     String sNumberAnswers = questionObject.getString("num_answers_per_question");
                     String sRightChoice = questionObject.getString("right_choice");
 
@@ -141,7 +163,7 @@ public class CheckDataTask extends AsyncTask<String,Integer,Integer> {
 
         }
         catch(JSONException exception) {
-            return AppConstant.JSON_PARSE_DATA_ERROR;
+            return AppConstant.MISSING_FIELD_IN_FORMAT;
         }
         catch(NumberFormatException formatException) {
             return AppConstant.JSON_PARSE_DATA_ERROR;
