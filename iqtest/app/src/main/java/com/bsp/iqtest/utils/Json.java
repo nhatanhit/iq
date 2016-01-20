@@ -1,5 +1,6 @@
 package com.bsp.iqtest.utils;
 
+import android.app.Activity;
 import android.content.Context;
 
 import java.io.*;
@@ -33,27 +34,20 @@ public class Json {
         return null;
     }
 
-    public static String loadJsonFromAssets(String path,Context context) {
-        StringBuilder stringBuilder = new StringBuilder();
+    public static String loadJSONFromAsset(Activity activity) {
+        String json = null;
         try {
-            java.io.File f = new java.io.File(path);
-            if(f.exists() && !f.isDirectory() && f.canRead()) {
-                InputStream is = context.getAssets().open(path);
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
-
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-
-                bufferedReader.close();
-                return stringBuilder.toString();
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            InputStream is = activity.getAssets().open("data.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
         }
-
-        return null;
+        catch (IOException ex) {
+            return null;
+        }
+        return json;
     }
+
 }

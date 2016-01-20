@@ -1,19 +1,34 @@
 package com.bsp.iqtest.iqtest;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.bsp.iqtest.constant.AppConstant;
+import com.bsp.iqtest.listener.CustomListener;
+import com.bsp.iqtest.task.CheckDataTask;
+import com.bsp.iqtest.task.DeleteFolderTask;
+import com.bsp.iqtest.task.DownloadTask;
+import com.bsp.iqtest.task.UnzippingTask;
 import com.bsp.iqtest.utils.KeyValueDb;
+import com.bsp.iqtest.utils.NoticeDialog;
+
+import java.io.File;
 
 /**
  * Created by anh on 12/23/15.
  */
 public class RegisterActivity extends CommonActivity {
     Button btnRegister;
+    private Activity mActivity;
+
 
 
     private View.OnClickListener registerClickListener = new View.OnClickListener() {
@@ -53,11 +68,17 @@ public class RegisterActivity extends CommonActivity {
         }
     };
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         this.mActivity = this;
+
+
+        //register install event broadcast receiver
+
 
         //redirect to login page if it has username and password
         String username =  KeyValueDb.getValue(getApplicationContext(),"username");
@@ -66,13 +87,19 @@ public class RegisterActivity extends CommonActivity {
         if(!username.equals("") && !password.equals("") && !company_name.equals("")) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
-            this.finish();
+            mActivity.finish();
         }
 
 
-       btnRegister = (Button)findViewById(R.id.btn_register);
+        btnRegister = (Button)findViewById(R.id.btn_register);
         btnRegister.setOnClickListener(registerClickListener);
 
         setupUI(findViewById(R.id.register_screen));
+
+        //set up others
+        String numberQuestions =  KeyValueDb.getValue(getApplicationContext(), "number_of_question");
+        if(numberQuestions.equals("")) {
+            KeyValueDb.setValue(getApplicationContext(),"number_of_question",AppConstant.DEFAULT_NUMBER_QUESTION.toString());
+        }
     }
 }

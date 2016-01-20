@@ -15,11 +15,13 @@
 
         <TextView
             android:background="@drawable/round_text_view"
-            android:text="@string/test_text"
+            android:text="@string/user_guide_text"
             android:layout_marginTop="@dimen/space_5"
             android:padding="@dimen/space_16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+
 
     </LinearLayout>
 

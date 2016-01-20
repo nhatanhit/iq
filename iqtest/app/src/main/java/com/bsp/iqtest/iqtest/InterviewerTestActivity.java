@@ -22,6 +22,7 @@ import com.bsp.iqtest.model.QuestionModel;
 import com.bsp.iqtest.model.UserModel;
 import com.bsp.iqtest.task.CountTimerTask;
 import com.bsp.iqtest.task.UpdateUserDataTask;
+import com.bsp.iqtest.utils.Json;
 import com.bsp.iqtest.utils.KeyValueDb;
 import com.bsp.iqtest.utils.NoticeDialog;
 import com.bsp.iqtest.utils.Screen;
@@ -30,6 +31,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
@@ -51,6 +54,7 @@ public class InterviewerTestActivity extends CustomBarWithHeaderActivity {
     private HashMap<Integer,String> userAnswers;
     private Integer userId;
 
+    private boolean isloadFromAssets = true;
 
     public void initializeTimerTask() {
         Integer allowMinute = Integer.parseInt(KeyValueDb.getValue(getApplicationContext(),"allow_minute")) ;
@@ -101,7 +105,12 @@ public class InterviewerTestActivity extends CustomBarWithHeaderActivity {
                             break;
                         }
                     }
-                    switchImage(currentQuestion);
+                    if(isloadFromAssets) {
+                        switchImageFromAssets(currentQuestion);
+                    }
+                    else {
+                        switchImage(currentQuestion);
+                    }
                 }
 //                currentQuestion = 0;
             }
@@ -109,7 +118,13 @@ public class InterviewerTestActivity extends CustomBarWithHeaderActivity {
                 Integer iLabel = (currentQuestion + 1);
                 Integer iTotalLabel = listQuestion.size();
                 currentQuestionTextView.setText(iLabel.toString() + "/" + iTotalLabel.toString());
-                switchImage(currentQuestion);
+
+                if(isloadFromAssets) {
+                    switchImageFromAssets(currentQuestion);
+                }
+                else {
+                    switchImage(currentQuestion);
+                }
 
                 if(!userAnswers.get(currentQuestion + 1).toString().equals("")) {
                     Integer iAnswer = Integer.parseInt(userAnswers.get(currentQuestion + 1).toString());
@@ -233,7 +248,15 @@ public class InterviewerTestActivity extends CustomBarWithHeaderActivity {
         switchNextQuestion.setOnClickListener(onSwitchNextQuestion);
         switchPrevQuestion.setOnClickListener(onSwitchPrevQuestion);
 
-        parseData();
+        String questionDataUrl =  KeyValueDb.getValue(getApplicationContext(),"question_data_url");
+        if(questionDataUrl.equals("")) {
+            loadDataFromAssets();
+            isloadFromAssets = true;
+        }
+        else {
+            isloadFromAssets = false;
+            parseData();
+        }
 
         Integer iTotalLabel = listQuestion.size();
         currentQuestionTextView.setText("1/" + iTotalLabel.toString());
@@ -245,7 +268,13 @@ public class InterviewerTestActivity extends CustomBarWithHeaderActivity {
             for(int i = 0 ; i < listQuestion.size();i++) {
                 userAnswers.put(i+1,"");
             }
-            switchImage(currentQuestion);
+
+            if(isloadFromAssets) {
+                switchImageFromAssets(currentQuestion);
+            }
+            else {
+                switchImage(currentQuestion);
+            }
         }
 
     }
@@ -414,4 +443,50 @@ public class InterviewerTestActivity extends CustomBarWithHeaderActivity {
         updateUserDataTask.execute(params);
 
     }
+
+
+    private void switchImageFromAssets(Integer currentQuestion) {
+        try {
+            InputStream imageStream = this.getAssets().open("image/" + listQuestion.get(currentQuestion).getQuestionImagePath());
+            Bitmap image = BitmapFactory.decodeStream(imageStream);
+            testQuestionImage.setImageBitmap(image);
+
+            imageStream = this.getAssets().open("image/" + listQuestion.get(currentQuestion).getAnswerImagePath());
+            image = BitmapFactory.decodeStream(imageStream);
+            testAnswerImage.setImageBitmap(image);
+
+            QuestionModel questionModel = listQuestion.get(currentQuestion);
+            makeAnswerGui(questionModel.getNumberAnswers());
+        }
+        catch(IOException exc) {
+
+        }
+    }
+
+    private void loadDataFromAssets() {
+        String questionData = Json.loadJSONFromAsset(this);
+        try {
+            JSONObject jObj = new JSONObject(questionData);
+            JSONArray listQuestions = jObj.getJSONArray("questions");
+            for(int i = 0 ; i < listQuestions.length();i++) {
+                JSONObject questionObject = listQuestions.getJSONObject(i);
+                String questionPath = questionObject.getString("question_data");
+                String answerPath = questionObject.getString("answers");
+                Integer numAnswers = Integer.parseInt(questionObject.getString("num_answers_per_question"));
+                Integer rightChoice = Integer.parseInt(questionObject.getString("right_choice"));
+                QuestionModel question = new QuestionModel();
+                question.setAnswerImagePath(answerPath);
+                question.setQuestionImagePath(questionPath);
+                question.setNumberAnswers(numAnswers);
+                question.setRightChoice(rightChoice);
+
+                listQuestion.add(question);
+
+            }
+        }
+        catch (Exception exc) {
+
+        }
+    }
+
 }

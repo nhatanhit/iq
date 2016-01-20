@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import android.widget.ImageView;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 
 import com.bsp.iqtest.constant.AppConstant;
 import com.bsp.iqtest.model.QuestionModel;
+import com.bsp.iqtest.utils.Json;
 import com.bsp.iqtest.utils.KeyValueDb;
 import com.bsp.iqtest.utils.NoticeDialog;
 
@@ -33,7 +36,7 @@ public class QuestionActivity extends CustomBarWithHeaderActivity {
     private Integer currentQuestion;
     private ImageView currentQuestionView,currentAnswerView;
     private TableLayout tableAnswer;
-
+    private boolean isloadFromAssets = true;
 
     String unzippedPath;
     View.OnClickListener nextQuestionClick = new View.OnClickListener(){
@@ -44,8 +47,12 @@ public class QuestionActivity extends CustomBarWithHeaderActivity {
                 currentQuestion = 0;
 
             }
-            switchImage(currentQuestion);
-
+            if(isloadFromAssets) {
+                switchImageFromAssets(currentQuestion);
+            }
+            else {
+                switchImage(currentQuestion);
+            }
         }
     };
 
@@ -56,7 +63,12 @@ public class QuestionActivity extends CustomBarWithHeaderActivity {
             if(currentQuestion < 0) {
                 currentQuestion = 0;
             }
-            switchImage(currentQuestion);
+            if(isloadFromAssets) {
+                switchImageFromAssets(currentQuestion);
+            }
+            else {
+                switchImage(currentQuestion);
+            }
         }
     };
 
@@ -82,13 +94,27 @@ public class QuestionActivity extends CustomBarWithHeaderActivity {
         };
         bindEvents();
         onSetHeaderText("View Question/Answers");
+        String questionDataUrl =  KeyValueDb.getValue(getApplicationContext(),"question_data_url");
+        if(questionDataUrl.equals("")) {
+            loadDataFromAssets();
+            isloadFromAssets = true;
+        }
+        else {
+            isloadFromAssets = false;
+            parseData();
+        }
 
-        parseData();
 
         ImageView viewPreviousQuestions = (ImageView)findViewById(R.id.view_previous_question);
         ImageView viewNextQuestion = (ImageView)findViewById(R.id.view_next_question);
         if(listQuestion.size() > 0) {
-            switchImage(currentQuestion);
+            if(isloadFromAssets) {
+                switchImageFromAssets(currentQuestion);
+            }
+            else {
+                switchImage(currentQuestion);
+            }
+
         }
 
         viewNextQuestion.setOnClickListener(nextQuestionClick);
@@ -236,6 +262,50 @@ public class QuestionActivity extends CustomBarWithHeaderActivity {
         }
 
         tableRow.addView(answerCell);
+    }
+
+    private void switchImageFromAssets(Integer currentQuestion) {
+        try {
+            InputStream imageStream = this.getAssets().open("image/" + listQuestion.get(currentQuestion).getQuestionImagePath());
+            Bitmap image = BitmapFactory.decodeStream(imageStream);
+            currentQuestionView.setImageBitmap(image);
+
+            imageStream = this.getAssets().open("image/" + listQuestion.get(currentQuestion).getAnswerImagePath());
+            image = BitmapFactory.decodeStream(imageStream);
+            currentAnswerView.setImageBitmap(image);
+
+            QuestionModel questionModel = listQuestion.get(currentQuestion);
+            makeAnswerGui(questionModel.getNumberAnswers(), questionModel.getRightChoice());
+        }
+        catch(IOException exc) {
+
+        }
+    }
+
+    private void loadDataFromAssets() {
+        String questionData = Json.loadJSONFromAsset(this);
+        try {
+            JSONObject jObj = new JSONObject(questionData);
+            JSONArray listQuestions = jObj.getJSONArray("questions");
+            for(int i = 0 ; i < listQuestions.length();i++) {
+                JSONObject questionObject = listQuestions.getJSONObject(i);
+                String questionPath = questionObject.getString("question_data");
+                String answerPath = questionObject.getString("answers");
+                Integer numAnswers = Integer.parseInt(questionObject.getString("num_answers_per_question"));
+                Integer rightChoice = Integer.parseInt(questionObject.getString("right_choice"));
+                QuestionModel question = new QuestionModel();
+                question.setAnswerImagePath(answerPath);
+                question.setQuestionImagePath(questionPath);
+                question.setNumberAnswers(numAnswers);
+                question.setRightChoice(rightChoice);
+
+                listQuestion.add(question);
+
+            }
+        }
+        catch (Exception exc) {
+
+        }
     }
 
 }

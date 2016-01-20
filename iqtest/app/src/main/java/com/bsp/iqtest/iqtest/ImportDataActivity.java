@@ -139,10 +139,10 @@ public class ImportDataActivity extends CustomBarWithHeaderActivity {
                 mProgressDialog.setMessage("Unzipping Progress");
                 //open file, check extension, and then extract
                 mProgressDialog.setProgress(0);
-
+                
                 String zipFile = Environment.getExternalStorageDirectory() + "/data.zip";
                 String unzipLocation = Environment.getExternalStorageDirectory() + "/tmp/";
-                UnzippingTask unzipTask = new UnzippingTask(getApplicationContext(),unzipCallback,zipFile,unzipLocation);
+                UnzippingTask unzipTask = new UnzippingTask(unzipCallback,zipFile,unzipLocation);
 
                 zipFileLocation = zipFile;
                 unzipDirLocation = unzipLocation;

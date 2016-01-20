@@ -18,7 +18,7 @@ import java.util.zip.ZipInputStream;
  */
 public class UnzippingTask extends AsyncTask<Void,Integer,Integer> {
 
-    private Context mContext;
+
     private CustomListener.onAsynTaskExtractZipProgress progressListener;
     private String _zipFile;
     private String _location;
@@ -57,8 +57,8 @@ public class UnzippingTask extends AsyncTask<Void,Integer,Integer> {
         }
     }
 
-    public UnzippingTask(Context context,CustomListener.onAsynTaskExtractZipProgress l,String zipFile, String location) {
-        this.mContext = context;
+    public UnzippingTask(CustomListener.onAsynTaskExtractZipProgress l,String zipFile, String location) {
+
         this.progressListener = l;
         this._zipFile = zipFile;
         this._location = location;

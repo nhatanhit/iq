@@ -22,7 +22,7 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
-
+    <string name="register">Save</string>
     <string name="full_name">Full Name</string>
     <string name="phone">Phone</string>
     <string name="add_user_menu_item">Add User</string>
@@ -38,13 +38,28 @@
     <string name="example_number_of_sentence">20/30</string>
     <string name="example_number_of_correct">17</string>
     <string name="title_activity_import_data">ImportDataActivity</string>
-    <string name="example_hint_path_text">http://bsp.vn/image.zip</string>
+    <string name="example_hint_path_text">http://iqdata.comxa.com/data.zip</string>
     <string name="title_activity_user_guide">UserGuideActivity</string>
-    <string name="test_text">
-        "Hôm qua 23/12, Công Phượng đã ký hợp đồng thi đấu một năm cho CLB Mito Hollyhock. Đây cầu thủ thứ hai của Học viện HAGL Arsenal JMG được đưa ra nước ngoài thi đấu. Trước đó ít ngày, tiền vệ Nguyễn Tuấn Anh đã đạt được thỏa thuận thi đấu với CLB Yokohama, cũng thuộc J-League 2. Ngày 28/12 sắp tới, đến lượt tiền vệ Lương Xuân Trường ký hợp đồng với CLB Incehon United của Hàn Quốc
-        Tôi vui, cảm giác giống như một người cha cho ba đứa con gái đi lấy chồng chỉ trong một tháng. Mà đặc biệt là toàn lấy chồng ngoại quốc mới độc đáo chứ.
-        Đây thực chất chỉ là những cầu thủ nổi bật trong khoá I của Học viện. Khoá II đã có nhiều tài năng nổi lên, trong đó tôi đánh giá cao Thanh Hậu. Theo báo cáo đánh giá của Học viện JMG toàn cầu, khoá III và khóa IV có nhiều cầu thủ còn hay hơn cả Công Phượng, Tuấn Anh hay Xuân Trường. Chắc chắn ba-bốn năm tới, HAGL sẽ có nhiều ngôi sao sáng nữa."
+
+    <string name="user_guide_text">
+        <b>Data Zip File Format</b>\n
+        Zip File contains two parts: data.json and image folder.
+        Image Folder contains question images and answer images.
+        Need to put these parts into folder has name :"data" and zip this folder.
+        \n\n<b>Json Format Guide</b>\n
+         {\n\t\t"num_questions": number of question,
+            \n\t\t"questions":[
+                            \n\t\t\t\t{
+                                \n\t\t\t\t"question_data": image name of question file,
+                                \n\t\t\t\t"num_answers_per_question":number of answers of this question,
+                                \n\t\t\t\t"answers": image name of answer file,
+                                \n\t\t\t\t"right_choice":right answer for this question
+                            \n\t\t\t\t}
+                        \n\t\t]
+        \n}
     </string>
+
+
     <string name="title_activity_question">QuestionActivity</string>
 
 </resources>

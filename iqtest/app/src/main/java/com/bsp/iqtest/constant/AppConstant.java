@@ -42,6 +42,8 @@ public class AppConstant {
     public static final int RIGHT_CHOICE_SETTING_WRONG = 32;
     public static final int MISSING_FIELD_IN_FORMAT = 33;
 
+    public static final Integer DEFAULT_NUMBER_QUESTION = 10;
+
     public static final Map<Integer, String> messages = new HashMap<Integer,String>(){{
         put(AppConstant.CHECK_DOWNLOAD_DATA_SUCCES, "Download Data Success");
         put(AppConstant.DOWNLOAD_DATA_ERROR_FAILED_CHECKSUM, "Downloaded Data Failed Checksum");
