@@ -92,7 +92,7 @@ public class AddUserActivity extends CustomBarWithHeaderActivity {
             }
         };
         bindEvents();
-        onSetHeaderText("Add User");
+//        onSetHeaderText("Add User");
 
     }
 }

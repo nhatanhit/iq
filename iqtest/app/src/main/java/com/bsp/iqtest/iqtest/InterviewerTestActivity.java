@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Bundle;
@@ -227,7 +228,10 @@ public class InterviewerTestActivity extends CustomBarWithHeaderActivity {
         setContentView(R.layout.activity_interviewer_test);
         mActivity = this;
         bindEvents();
-        onSetHeaderText("Interview IQ Test");
+
+        Drawable drawable = getResources().getDrawable(R.drawable.iq_test);
+        onSetHeaderImage(drawable);
+//        onSetHeaderText("Interview IQ Test");
         timeDurationTextView = (TextView)findViewById(R.id.timer);
         startTimer();
 
@@ -243,7 +247,7 @@ public class InterviewerTestActivity extends CustomBarWithHeaderActivity {
 
         bindEvents();
         this.iconBack.setVisibility(View.INVISIBLE);
-        onSetHeaderText("IQ Test");
+//        onSetHeaderText("IQ Test");
 
         switchNextQuestion.setOnClickListener(onSwitchNextQuestion);
         switchPrevQuestion.setOnClickListener(onSwitchPrevQuestion);

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -252,7 +253,9 @@ public class ImportDataActivity extends CustomBarWithHeaderActivity {
             }
         };
         bindEvents();
-        onSetHeaderText("Import Data");
+        Drawable drawable = getResources().getDrawable(R.drawable.import_data);
+        onSetHeaderImage(drawable);
+//        onSetHeaderText("Import Data");
         setupUI(findViewById(R.id.layout_import_data));
     }
 }

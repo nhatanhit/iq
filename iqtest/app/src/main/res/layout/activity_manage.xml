@@ -18,7 +18,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_weight="1.8"
-        android:background="@drawable/bg_wood"
+        android:background="@drawable/bg_wood_2line"
         android:orientation="vertical"
         android:weightSum="5">
 
@@ -40,8 +40,8 @@
             android:layout_height="0dp"
             android:layout_weight="3.5"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/space_30"
-            android:paddingRight="@dimen/space_30">
+            android:paddingLeft="@dimen/space_40"
+            android:paddingRight="@dimen/space_40">
 
 
             <RelativeLayout
@@ -53,7 +53,8 @@
                     android:textColor="@color/color_white"
                     android:background="@drawable/round_corner_button_red"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/default_text_size"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -61,6 +62,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <Button
+
+                    android:textSize="@dimen/default_text_size"
                     android:id="@+id/navigate_view_result"
                     android:text="@string/view_result_menu_item" android:layout_centerInParent="true"
                     android:textColor="@color/color_white"
@@ -74,6 +77,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <Button
+                    android:textSize="@dimen/default_text_size"
                     android:id="@+id/navigate_view_question"
                     android:text="@string/view_question_menu_item" android:layout_centerInParent="true"
                     android:textColor="@color/color_white"
@@ -87,6 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <Button
+                    android:textSize="@dimen/default_text_size"
                     android:id="@+id/navigate_import_data"
                     android:text="@string/import_data_menu_item" android:layout_centerInParent="true"
                     android:textColor="@color/color_white"

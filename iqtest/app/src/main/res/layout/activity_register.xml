@@ -16,7 +16,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_weight="1.8"
-        android:background="@drawable/bg_wood"
+        android:background="@drawable/bg_wood_2line"
         android:orientation="vertical"
         android:weightSum="5">
 

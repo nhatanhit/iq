@@ -44,13 +44,16 @@
     <dimen name="space_15">15dp</dimen>
     <dimen name="space_20">20dp</dimen>
     <dimen name="space_30">30dp</dimen>
+    <dimen name="space_40">40dp</dimen>
     <dimen name="space_5">5dp</dimen>
     <dimen name="space_10">10dp</dimen>
     <dimen name="space_8">8dp</dimen>
     <dimen name="space_16">16dp</dimen>
-    <dimen name="header_text_size">17sp</dimen>
+    <dimen name="header_text_size">30sp</dimen>
     <dimen name="border_width">2dp</dimen>
     <dimen name="thin_border">1dp</dimen>
     <dimen name="space_300">300dp</dimen>
     <dimen name="space_2">2dp</dimen>
+    <dimen name="default_text_size">20sp</dimen>
+    <dimen name="stroke_width">5dp</dimen>
 </resources>

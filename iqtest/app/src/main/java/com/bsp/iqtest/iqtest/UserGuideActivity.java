@@ -22,6 +22,6 @@ public class UserGuideActivity extends CustomBarWithHeaderActivity {
         };
 
         bindEvents();
-        onSetHeaderText("User Guide");
+//        onSetHeaderText("User Guide");
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -93,7 +94,9 @@ public class QuestionActivity extends CustomBarWithHeaderActivity {
             }
         };
         bindEvents();
-        onSetHeaderText("View Question/Answers");
+        Drawable drawable = getResources().getDrawable(R.drawable.view_questions_answers);
+        onSetHeaderImage(drawable);
+
         String questionDataUrl =  KeyValueDb.getValue(getApplicationContext(),"question_data_url");
         if(questionDataUrl.equals("")) {
             loadDataFromAssets();
